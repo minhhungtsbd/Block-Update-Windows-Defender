@@ -21,5 +21,5 @@ Notes:
 
 Release output:
 
-- Debug build: `bin\Debug\net48\`
-- Release build: `bin\Release\net48\`
+- Debug build: `bin\Debug\net451\`
+- Release build: `bin\Release\net451\`

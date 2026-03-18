@@ -277,7 +277,7 @@ namespace BlockUpdateWindowsDefender.ViewModels
             {
                 System.Diagnostics.Process.Start("explorer.exe", $"/select,\"{_logger.LogFilePath}\"");
                 AddLog("Log folder opened.");
-                return Task.CompletedTask;
+                return Task.FromResult(0);
             });
         }
 
