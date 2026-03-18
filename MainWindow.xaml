@@ -66,6 +66,45 @@
             <Setter Property="FontWeight" Value="SemiBold" />
             <Setter Property="TextWrapping" Value="Wrap" />
         </Style>
+
+        <Style TargetType="TabControl">
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0" />
+            <Setter Property="Padding" Value="0" />
+        </Style>
+
+        <Style TargetType="TabItem">
+            <Setter Property="Foreground" Value="{StaticResource MutedBrush}" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="Background" Value="#111827" />
+            <Setter Property="BorderBrush" Value="#1F2937" />
+            <Setter Property="Padding" Value="18,10" />
+            <Setter Property="Margin" Value="0,0,10,0" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="TabItem">
+                        <Border x:Name="TabBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="1"
+                                CornerRadius="12"
+                                Padding="{TemplateBinding Padding}"
+                                Margin="{TemplateBinding Margin}">
+                            <ContentPresenter HorizontalAlignment="Center"
+                                              VerticalAlignment="Center"
+                                              ContentSource="Header" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="TabBorder" Property="Background" Value="#0EA5E9" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </Window.Resources>
 
     <Grid Margin="22">
@@ -93,15 +132,15 @@
             </Grid>
         </Border>
 
-        <ScrollViewer Grid.Row="1" VerticalScrollBarVisibility="Auto">
-            <Grid>
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="1.15*" />
-                    <ColumnDefinition Width="0.85*" />
-                </Grid.ColumnDefinitions>
+        <TabControl Grid.Row="1">
+            <TabItem Header="Control">
+                <Grid Margin="0,18,0,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto" />
+                        <RowDefinition Height="*" />
+                    </Grid.RowDefinitions>
 
-                <StackPanel Margin="0,0,18,0">
-                    <Border Style="{StaticResource PanelBorderStyle}">
+                    <Border Style="{StaticResource PanelBorderStyle}" Margin="0,0,0,18">
                         <Grid>
                             <Grid.RowDefinitions>
                                 <RowDefinition Height="Auto" />
@@ -110,70 +149,184 @@
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
                             </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="System" Style="{StaticResource SectionTitleStyle}" Grid.ColumnSpan="2" Margin="0,0,0,18" />
+                            <TextBlock Text="System"
+                                       Style="{StaticResource SectionTitleStyle}"
+                                       Grid.ColumnSpan="4"
+                                       Margin="0,0,0,18" />
 
-                            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,16,0">
+                            <StackPanel Grid.Row="1" Grid.Column="0" Margin="0,0,18,0">
                                 <TextBlock Text="Computer Name" Style="{StaticResource LabelStyle}" />
-                                <TextBlock Text="{Binding SystemInfo.ComputerName}" Style="{StaticResource ValueStyle}" Margin="0,0,0,14" />
+                                <TextBlock Text="{Binding SystemInfo.ComputerName}" Style="{StaticResource ValueStyle}" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="1" Margin="0,0,18,0">
                                 <TextBlock Text="Windows Edition" Style="{StaticResource LabelStyle}" />
                                 <TextBlock Text="{Binding SystemInfo.Caption}" Style="{StaticResource ValueStyle}" />
                             </StackPanel>
 
-                            <StackPanel Grid.Row="1" Grid.Column="1">
+                            <StackPanel Grid.Row="1" Grid.Column="2" Margin="0,0,18,0">
                                 <TextBlock Text="Version / Build" Style="{StaticResource LabelStyle}" />
-                                <TextBlock Text="{Binding SystemInfo.DisplayVersion}" Style="{StaticResource ValueStyle}" Margin="0,0,0,14" />
+                                <TextBlock Text="{Binding SystemInfo.DisplayVersion}" Style="{StaticResource ValueStyle}" />
+                            </StackPanel>
+
+                            <StackPanel Grid.Row="1" Grid.Column="3">
                                 <TextBlock Text="Current Time Zone" Style="{StaticResource LabelStyle}" />
                                 <TextBlock Text="{Binding CurrentTimeZone}" Style="{StaticResource ValueStyle}" />
                             </StackPanel>
                         </Grid>
                     </Border>
 
-                    <Border Style="{StaticResource PanelBorderStyle}">
-                        <StackPanel>
-                            <TextBlock Text="Windows Update" Style="{StaticResource SectionTitleStyle}" />
-                            <TextBlock Text="{Binding WindowsUpdateStatusText}" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,16,0,6" />
-                            <TextBlock Text="{Binding WindowsUpdateDetailText}" Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" Margin="0,0,0,18" />
-                            <WrapPanel>
-                                <Button Content="Refresh" Style="{StaticResource SecondaryButtonStyle}" Command="{Binding RefreshCommand}" />
-                                <Button Content="Enable Update" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding EnableWindowsUpdateCommand}" />
-                                <Button Content="Disable Update" Style="{StaticResource DangerButtonStyle}" Command="{Binding DisableWindowsUpdateCommand}" />
-                            </WrapPanel>
-                        </StackPanel>
-                    </Border>
+                    <Grid Grid.Row="1">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="*" />
+                            <ColumnDefinition Width="18" />
+                            <ColumnDefinition Width="*" />
+                        </Grid.ColumnDefinitions>
 
-                    <Border Style="{StaticResource PanelBorderStyle}">
-                        <StackPanel>
-                            <TextBlock Text="Windows Defender" Style="{StaticResource SectionTitleStyle}" />
-                            <TextBlock Text="{Binding DefenderStatusText}" Foreground="White" FontSize="22" FontWeight="Bold" Margin="0,16,0,6" />
-                            <TextBlock Text="{Binding DefenderDetailText}" Foreground="{StaticResource MutedBrush}" TextWrapping="Wrap" Margin="0,0,0,18" />
-                            <WrapPanel>
-                                <Button Content="Enable Defender" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding EnableDefenderCommand}" />
-                                <Button Content="Disable Defender" Style="{StaticResource DangerButtonStyle}" Command="{Binding DisableDefenderCommand}" />
-                            </WrapPanel>
-                        </StackPanel>
-                    </Border>
-                </StackPanel>
+                        <Border Grid.Column="0" Style="{StaticResource PanelBorderStyle}" Margin="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
 
-                <StackPanel Grid.Column="1">
-                    <Border Style="{StaticResource PanelBorderStyle}">
-                        <StackPanel>
+                                <TextBlock Text="Windows Update" Style="{StaticResource SectionTitleStyle}" />
+                                <TextBlock Grid.Row="1"
+                                           Text="{Binding WindowsUpdateStatusText}"
+                                           Foreground="White"
+                                           FontSize="30"
+                                           FontWeight="Bold"
+                                           Margin="0,18,0,10" />
+                                <TextBlock Grid.Row="2"
+                                           Text="{Binding WindowsUpdateDetailText}"
+                                           Foreground="{StaticResource MutedBrush}"
+                                           TextWrapping="Wrap"
+                                           Margin="0,0,0,18" />
+                                <WrapPanel Grid.Row="3">
+                                    <Button Content="Refresh"
+                                            Style="{StaticResource SecondaryButtonStyle}"
+                                            Command="{Binding RefreshCommand}" />
+                                    <Button Content="Enable Update"
+                                            Style="{StaticResource PrimaryButtonStyle}"
+                                            Command="{Binding EnableWindowsUpdateCommand}" />
+                                    <Button Content="Disable Update"
+                                            Style="{StaticResource DangerButtonStyle}"
+                                            Command="{Binding DisableWindowsUpdateCommand}" />
+                                </WrapPanel>
+                            </Grid>
+                        </Border>
+
+                        <Border Grid.Column="2" Style="{StaticResource PanelBorderStyle}" Margin="0">
+                            <Grid>
+                                <Grid.RowDefinitions>
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="Auto" />
+                                    <RowDefinition Height="*" />
+                                    <RowDefinition Height="Auto" />
+                                </Grid.RowDefinitions>
+
+                                <TextBlock Text="Windows Defender" Style="{StaticResource SectionTitleStyle}" />
+                                <TextBlock Grid.Row="1"
+                                           Text="{Binding DefenderStatusText}"
+                                           Foreground="White"
+                                           FontSize="30"
+                                           FontWeight="Bold"
+                                           Margin="0,18,0,10" />
+                                <TextBlock Grid.Row="2"
+                                           Text="{Binding DefenderDetailText}"
+                                           Foreground="{StaticResource MutedBrush}"
+                                           TextWrapping="Wrap"
+                                           Margin="0,0,0,18" />
+                                <WrapPanel Grid.Row="3">
+                                    <Button Content="Enable Defender"
+                                            Style="{StaticResource PrimaryButtonStyle}"
+                                            Command="{Binding EnableDefenderCommand}" />
+                                    <Button Content="Disable Defender"
+                                            Style="{StaticResource DangerButtonStyle}"
+                                            Command="{Binding DisableDefenderCommand}" />
+                                </WrapPanel>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="Time Zone">
+                <Grid Margin="0,18,0,0">
+                    <Border Style="{StaticResource PanelBorderStyle}" Margin="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+
                             <TextBlock Text="Time &amp; Time Zone" Style="{StaticResource SectionTitleStyle}" />
-                            <CheckBox Content="Auto update on app startup" Foreground="White" IsChecked="{Binding AutoSyncTimeOnStartup, Mode=TwoWay}" Margin="0,18,0,14" FontSize="14" />
-                            <CheckBox Content="Run at Windows startup" Foreground="White" IsChecked="{Binding RunAtWindowsStartup, Mode=TwoWay}" Margin="0,0,0,14" FontSize="14" />
+                            <CheckBox Grid.Row="1"
+                                      Content="Auto update on app startup"
+                                      Foreground="White"
+                                      IsChecked="{Binding AutoSyncTimeOnStartup, Mode=TwoWay}"
+                                      Margin="0,18,0,12"
+                                      FontSize="14" />
+                            <CheckBox Grid.Row="2"
+                                      Content="Run at Windows startup"
+                                      Foreground="White"
+                                      IsChecked="{Binding RunAtWindowsStartup, Mode=TwoWay}"
+                                      Margin="0,0,0,20"
+                                      FontSize="14" />
 
-                            <TextBlock Text="Current Local Time" Style="{StaticResource LabelStyle}" />
-                            <TextBlock Text="{Binding CurrentLocalTimeText}" Style="{StaticResource ValueStyle}" Margin="0,0,0,14" />
+                            <Grid Grid.Row="3" Margin="0,0,0,18">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
 
-                            <TextBlock Text="Last Sync Result" Style="{StaticResource LabelStyle}" />
-                            <TextBlock Text="{Binding LastTimeSyncMessage}" Style="{StaticResource ValueStyle}" Margin="0,0,0,18" />
+                                <StackPanel Margin="0,0,12,0">
+                                    <TextBlock Text="Current Local Time" Style="{StaticResource LabelStyle}" />
+                                    <TextBlock Text="{Binding CurrentLocalTimeText}" Style="{StaticResource ValueStyle}" />
+                                </StackPanel>
 
-                            <Button Content="Update Time Now" Style="{StaticResource PrimaryButtonStyle}" Command="{Binding SyncTimeCommand}" />
-                        </StackPanel>
+                                <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                                    <TextBlock Text="Current Time Zone" Style="{StaticResource LabelStyle}" />
+                                    <TextBlock Text="{Binding CurrentTimeZone}" Style="{StaticResource ValueStyle}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <StackPanel Grid.Row="4">
+                                <TextBlock Text="Last Sync Result" Style="{StaticResource LabelStyle}" />
+                                <Border Background="#0B1220" BorderBrush="#1F2937" BorderThickness="1" CornerRadius="12" Padding="14">
+                                    <TextBlock Text="{Binding LastTimeSyncMessage}"
+                                               Foreground="White"
+                                               TextWrapping="Wrap"
+                                               FontSize="15"
+                                               FontWeight="SemiBold" />
+                                </Border>
+                            </StackPanel>
+
+                            <Button Grid.Row="5"
+                                    Content="Update Time Now"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    Margin="0,18,0,0"
+                                    HorizontalAlignment="Left"
+                                    MinWidth="180"
+                                    Command="{Binding SyncTimeCommand}" />
+                        </Grid>
                     </Border>
+                </Grid>
+            </TabItem>
 
-                    <Border Style="{StaticResource PanelBorderStyle}" Margin="0,0,0,0">
+            <TabItem Header="Activity Log">
+                <Grid Margin="0,18,0,0">
+                    <Border Style="{StaticResource PanelBorderStyle}" Margin="0">
                         <DockPanel>
                             <Grid DockPanel.Dock="Top" Margin="0,0,0,14">
                                 <Grid.ColumnDefinitions>
@@ -190,20 +343,20 @@
 
                             <ListBox ItemsSource="{Binding LogEntries}"
                                      Background="#0B1220"
-                                     BorderThickness="0"
+                                     BorderBrush="#1F2937"
+                                     BorderThickness="1"
                                      Foreground="White"
-                                     FontSize="12"
-                                     MinHeight="260">
+                                     FontSize="12">
                                 <ListBox.ItemTemplate>
                                     <DataTemplate>
-                                        <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="0,6,0,6" />
+                                        <TextBlock Text="{Binding}" TextWrapping="Wrap" Margin="10,7,10,7" />
                                     </DataTemplate>
                                 </ListBox.ItemTemplate>
                             </ListBox>
                         </DockPanel>
                     </Border>
-                </StackPanel>
-            </Grid>
-        </ScrollViewer>
+                </Grid>
+            </TabItem>
+        </TabControl>
     </Grid>
 </Window>
