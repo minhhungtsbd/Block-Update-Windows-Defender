@@ -9,7 +9,7 @@ WPF app local cho Windows VPS để quản lý:
 
 ## Giao diện
 
-![Windows VPS Control Center](./BlockUpdateWindowsDefender_lT1koqpNyj.png)
+![Windows VPS Control Center](./BlockUpdateWindowsDefender_1n2anP7fYj.png)
 
 ## Tính năng chính
 
