@@ -1,5 +1,6 @@
 using System;
 using System.Globalization;
+using System.Text;
 using System.Windows.Data;
 using System.Windows.Media;
 
@@ -22,44 +23,78 @@ namespace BlockUpdateWindowsDefender.Converters
                 return DefaultBrush;
             }
 
-            status = status.Trim();
+            var normalizedStatus = Normalize(status.Trim());
 
-            if (Contains(status, "enabled") || Contains(status, "active") || Contains(status, "running") || Contains(status, "ready") ||
-                Contains(status, "bat") || Contains(status, "sẵn sàng") || Contains(status, "san sang") || Contains(status, "hoàn tất") || Contains(status, "hoan tat"))
-            {
-                return SuccessBrush;
-            }
-
-            if (Contains(status, "available"))
-            {
-                return SuccessBrush;
-            }
-
-            if (Contains(status, "disabled") || Contains(status, "stopped") || Contains(status, "failed") || Contains(status, "error") ||
-                Contains(status, "tắt") || Contains(status, "tat") || Contains(status, "lỗi") || Contains(status, "loi"))
-            {
-                return DangerBrush;
-            }
-
-            if (Contains(status, "unsupported") || Contains(status, "unavailable") || Contains(status, "không hỗ trợ") || Contains(status, "khong ho tro"))
+            if (ContainsAny(normalizedStatus,
+                "unsupported",
+                "unavailable",
+                "khong ho tro",
+                "khong kha dung",
+                "khong ro",
+                "unknown"))
             {
                 return MutedBrush;
             }
 
-            if (Contains(status, "sync") || Contains(status, "refresh") || Contains(status, "detect") ||
-                Contains(status, "đồng bộ") || Contains(status, "dong bo") || Contains(status, "làm mới") || Contains(status, "lam moi") || Contains(status, "nhận diện") || Contains(status, "nhan dien") ||
-                Contains(status, "đang") ||
-                Contains(status, "dang"))
+            if (ContainsAny(normalizedStatus,
+                "disabled",
+                "stopped",
+                "failed",
+                "error",
+                "action failed",
+                "da tat",
+                "tat",
+                "loi",
+                "that bai",
+                "vo hieu hoa"))
             {
-                return InfoBrush;
+                return DangerBrush;
             }
 
-            if (Contains(status, "warning") || Contains(status, "blocked") || Contains(status, "cảnh báo") || Contains(status, "canh bao") || Contains(status, "bị chặn") || Contains(status, "bi chan"))
+            if (ContainsAny(normalizedStatus,
+                "warning",
+                "blocked",
+                "likely blocked",
+                "partially blocked",
+                "canh bao",
+                "bi chan"))
             {
                 return WarningBrush;
             }
 
-            if (Contains(status, "possible"))
+            if (ContainsAny(normalizedStatus,
+                "sync",
+                "refresh",
+                "detect",
+                "checking",
+                "applying",
+                "switching",
+                "dong bo",
+                "lam moi",
+                "nhan dien",
+                "dang",
+                "thuc hien"))
+            {
+                return InfoBrush;
+            }
+
+            if (ContainsAny(normalizedStatus,
+                "enabled",
+                "active",
+                "running",
+                "ready",
+                "available",
+                "completed",
+                "success",
+                "da bat",
+                "san sang",
+                "hoan tat",
+                "thanh cong"))
+            {
+                return SuccessBrush;
+            }
+
+            if (ContainsAny(normalizedStatus, "possible"))
             {
                 return InfoBrush;
             }
@@ -72,9 +107,53 @@ namespace BlockUpdateWindowsDefender.Converters
             throw new NotSupportedException();
         }
 
-        private static bool Contains(string source, string token)
+        private static bool ContainsAny(string source, params string[] tokens)
         {
-            return source.IndexOf(token, StringComparison.OrdinalIgnoreCase) >= 0;
+            if (string.IsNullOrWhiteSpace(source) || tokens == null)
+            {
+                return false;
+            }
+
+            for (var i = 0; i < tokens.Length; i++)
+            {
+                var token = tokens[i];
+                if (string.IsNullOrWhiteSpace(token))
+                {
+                    continue;
+                }
+
+                if (source.IndexOf(token, StringComparison.OrdinalIgnoreCase) >= 0)
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        private static string Normalize(string source)
+        {
+            if (string.IsNullOrWhiteSpace(source))
+            {
+                return string.Empty;
+            }
+
+            var normalized = source.Normalize(NormalizationForm.FormD);
+            var builder = new StringBuilder(normalized.Length);
+            for (var i = 0; i < normalized.Length; i++)
+            {
+                var c = normalized[i];
+                if (CharUnicodeInfo.GetUnicodeCategory(c) != UnicodeCategory.NonSpacingMark)
+                {
+                    builder.Append(c);
+                }
+            }
+
+            return builder.ToString()
+                .Normalize(NormalizationForm.FormC)
+                .Replace('đ', 'd')
+                .Replace('Đ', 'D')
+                .ToLowerInvariant();
         }
 
         private static SolidColorBrush CreateBrush(string hex)

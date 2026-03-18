@@ -14,9 +14,9 @@
     <Description>Windows VPS control center for update, defender, timezone sync, browser install, and self-update.</Description>
     <Company>minhhungtsbd</Company>
     <Authors>minhhungtsbd</Authors>
-    <Version>1.1.1</Version>
-    <FileVersion>1.1.1.0</FileVersion>
-    <InformationalVersion>1.1.1</InformationalVersion>
+    <Version>1.1.2</Version>
+    <FileVersion>1.1.2.0</FileVersion>
+    <InformationalVersion>1.1.2</InformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>
