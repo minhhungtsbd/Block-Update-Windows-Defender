@@ -2,6 +2,14 @@
 
 Local WPF tool for a single Windows VPS.
 
+## Screenshot
+
+<p align="center">
+  <img src="./BlockUpdateWindowsDefender.png" alt="Block Update Windows Defender UI" width="920" />
+</p>
+
+## Features
+
 Current MVP features:
 
 - Detect current Windows version automatically
