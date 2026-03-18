@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.ServiceProcess;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using BlockUpdateWindowsDefender.Models;
 
@@ -16,9 +17,12 @@ namespace BlockUpdateWindowsDefender.Services
             _processRunner = processRunner;
         }
 
-        public async Task<TimeSyncResult> SyncAsync()
+        public async Task<TimeSyncResult> SyncAsync(string currentLanguageCode = null)
         {
-            var timezoneMessage = "Time zone unchanged.";
+            var fallbackLanguageCode = NormalizeLanguageCode(currentLanguageCode);
+            var timezoneMessage = IsVietnameseLanguage(fallbackLanguageCode)
+                ? "Múi giờ được giữ nguyên."
+                : "Time zone unchanged.";
             EnsureWindowsTimeServiceRunning();
 
             var resyncResult = await _processRunner.RunAsync("w32tm.exe", "/resync /force");
@@ -31,29 +35,48 @@ namespace BlockUpdateWindowsDefender.Services
                         ? resyncResult.StandardOutput.Trim()
                         : resyncResult.StandardError.Trim(),
                     TimeZoneDisplayName = TimeZoneInfo.Local.DisplayName,
-                    LocalTime = DateTime.Now
+                    LocalTime = DateTime.Now,
+                    SuggestedLanguageCode = fallbackLanguageCode
                 };
             }
 
-            var detectedTimeZone = await DetectTimeZoneAsync();
-            if (!string.IsNullOrWhiteSpace(detectedTimeZone))
+            var detectedResult = await DetectTimeZoneAsync();
+            var detectedIanaTimeZone = detectedResult != null ? detectedResult.IanaTimeZone : null;
+            var suggestedLanguageCode = ResolveSuggestedLanguageCode(detectedResult, fallbackLanguageCode);
+            var useVietnamese = IsVietnameseLanguage(suggestedLanguageCode);
+            var detectedWindowsTimeZone = MapIanaToWindows(detectedIanaTimeZone);
+            if (!string.IsNullOrWhiteSpace(detectedWindowsTimeZone))
             {
-                var setTimeZoneResult = await _processRunner.RunAsync("tzutil.exe", $"/s \"{detectedTimeZone}\"");
+                var setTimeZoneResult = await _processRunner.RunAsync("tzutil.exe", $"/s \"{detectedWindowsTimeZone}\"");
                 timezoneMessage = setTimeZoneResult.IsSuccess
-                    ? $"Time zone updated to {detectedTimeZone}."
-                    : "Could not update time zone automatically.";
+                    ? (useVietnamese
+                        ? $"Múi giờ đã được cập nhật sang {detectedWindowsTimeZone}."
+                        : $"Time zone updated to {detectedWindowsTimeZone}.")
+                    : (useVietnamese
+                        ? "Không thể tự động cập nhật múi giờ."
+                        : "Could not update time zone automatically.");
             }
             else
             {
-                timezoneMessage = "Could not map the detected IP time zone. Time zone was left unchanged.";
+                timezoneMessage = string.IsNullOrWhiteSpace(detectedIanaTimeZone)
+                    ? (useVietnamese
+                        ? "Không thể nhận diện múi giờ IP từ các dịch vụ online. Múi giờ được giữ nguyên."
+                        : "Could not detect IP time zone from online services. Time zone was left unchanged.")
+                    : (useVietnamese
+                        ? $"Không map được múi giờ IP ({detectedIanaTimeZone}). Múi giờ được giữ nguyên."
+                        : $"Could not map detected IP time zone ({detectedIanaTimeZone}). Time zone was left unchanged.");
             }
 
             return new TimeSyncResult
             {
                 Success = true,
-                Message = $"Windows time synchronized successfully. {timezoneMessage}",
+                Message = useVietnamese
+                    ? $"Đồng bộ giờ Windows thành công. {timezoneMessage}"
+                    : $"Windows time synchronized successfully. {timezoneMessage}",
                 TimeZoneDisplayName = TimeZoneInfo.Local.DisplayName,
-                LocalTime = DateTime.Now
+                LocalTime = DateTime.Now,
+                SuggestedLanguageCode = suggestedLanguageCode,
+                DetectedPublicIp = detectedResult?.PublicIp
             };
         }
 
@@ -71,35 +94,207 @@ namespace BlockUpdateWindowsDefender.Services
             }
         }
 
-        private static async Task<string> DetectTimeZoneAsync()
+        private static async Task<TimeZoneDetectionResult> DetectTimeZoneAsync()
         {
-            try
+            var endpoints = new[]
             {
-                using (var client = new HttpClient())
-                {
-                    client.Timeout = TimeSpan.FromSeconds(8);
-                    client.DefaultRequestHeaders.UserAgent.ParseAdd("BlockUpdateWindowsDefender/1.0");
-                    var ianaTimeZone = (await client.GetStringAsync("https://ipapi.co/timezone/")).Trim();
-                    if (string.IsNullOrWhiteSpace(ianaTimeZone))
-                    {
-                        return null;
-                    }
+                "https://ipwho.is/",
+                "https://free.freeipapi.com/api/json/",
+                "http://ip-api.com/json/"
+            };
 
-                    return MapIanaToWindows(ianaTimeZone);
+            foreach (var endpoint in endpoints)
+            {
+                try
+                {
+                    using (var client = new HttpClient())
+                    {
+                        client.Timeout = TimeSpan.FromSeconds(5);
+                        client.DefaultRequestHeaders.UserAgent.ParseAdd("BlockUpdateWindowsDefender/1.0");
+                        var response = (await client.GetStringAsync(endpoint)).Trim();
+                        var detected = ExtractTimeZone(endpoint, response);
+                        if (detected != null && !string.IsNullOrWhiteSpace(detected.IanaTimeZone))
+                        {
+                            return detected;
+                        }
+
+                        if (LooksLikeIanaTimeZone(response))
+                        {
+                            return new TimeZoneDetectionResult
+                            {
+                                IanaTimeZone = response.Trim().Replace("\\/", "/")
+                            };
+                        }
+                    }
+                }
+                catch
+                {
                 }
             }
-            catch
+
+            return null;
+        }
+
+        private static TimeZoneDetectionResult ExtractTimeZone(string endpoint, string response)
+        {
+            if (string.IsNullOrWhiteSpace(response))
             {
                 return null;
             }
+
+            var host = GetEndpointHost(endpoint);
+            if (string.Equals(host, "ipapi.co", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(host, "www.ipapi.co", StringComparison.OrdinalIgnoreCase))
+            {
+                return new TimeZoneDetectionResult
+                {
+                    IanaTimeZone = response.Trim().Replace("\\/", "/")
+                };
+            }
+
+            if (string.Equals(host, "free.freeipapi.com", StringComparison.OrdinalIgnoreCase))
+            {
+                var freeIpApiMatch = Regex.Match(response, "\"timeZones\"\\s*:\\s*\\[\\s*\"([^\"]+)\"", RegexOptions.IgnoreCase);
+                var countryCodeMatch = Regex.Match(response, "\"countryCode\"\\s*:\\s*\"([^\"]+)\"", RegexOptions.IgnoreCase);
+                var ipMatch = Regex.Match(response, "\"ipAddress\"\\s*:\\s*\"([^\"]+)\"", RegexOptions.IgnoreCase);
+                if (freeIpApiMatch.Success || countryCodeMatch.Success)
+                {
+                    return new TimeZoneDetectionResult
+                    {
+                        IanaTimeZone = freeIpApiMatch.Success
+                            ? freeIpApiMatch.Groups[1].Value.Trim().Replace("\\/", "/")
+                            : null,
+                        CountryCode = countryCodeMatch.Success
+                            ? countryCodeMatch.Groups[1].Value.Trim().ToUpperInvariant()
+                            : null,
+                        PublicIp = ipMatch.Success
+                            ? ipMatch.Groups[1].Value.Trim()
+                            : null
+                    };
+                }
+            }
+
+            if (string.Equals(host, "ipwho.is", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(host, "www.ipwho.is", StringComparison.OrdinalIgnoreCase))
+            {
+                var ipWhoIsMatch = Regex.Match(response, "\"id\"\\s*:\\s*\"([^\"]+/[^\"]+)\"", RegexOptions.IgnoreCase);
+                var countryCodeMatch = Regex.Match(response, "\"country_code\"\\s*:\\s*\"([^\"]+)\"", RegexOptions.IgnoreCase);
+                var ipMatch = Regex.Match(response, "\"ip\"\\s*:\\s*\"([^\"]+)\"", RegexOptions.IgnoreCase);
+                if (ipWhoIsMatch.Success || countryCodeMatch.Success)
+                {
+                    return new TimeZoneDetectionResult
+                    {
+                        IanaTimeZone = ipWhoIsMatch.Success
+                            ? ipWhoIsMatch.Groups[1].Value.Trim().Replace("\\/", "/")
+                            : null,
+                        CountryCode = countryCodeMatch.Success
+                            ? countryCodeMatch.Groups[1].Value.Trim().ToUpperInvariant()
+                            : null,
+                        PublicIp = ipMatch.Success
+                            ? ipMatch.Groups[1].Value.Trim()
+                            : null
+                    };
+                }
+            }
+
+            if (string.Equals(host, "ip-api.com", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(host, "www.ip-api.com", StringComparison.OrdinalIgnoreCase))
+            {
+                var ipApiMatch = Regex.Match(response, "\"timezone\"\\s*:\\s*\"([^\"]+)\"", RegexOptions.IgnoreCase);
+                var countryCodeMatch = Regex.Match(response, "\"countryCode\"\\s*:\\s*\"([^\"]+)\"", RegexOptions.IgnoreCase);
+                var ipMatch = Regex.Match(response, "\"query\"\\s*:\\s*\"([^\"]+)\"", RegexOptions.IgnoreCase);
+                if (ipApiMatch.Success || countryCodeMatch.Success)
+                {
+                    return new TimeZoneDetectionResult
+                    {
+                        IanaTimeZone = ipApiMatch.Success
+                            ? ipApiMatch.Groups[1].Value.Trim().Replace("\\/", "/")
+                            : null,
+                        CountryCode = countryCodeMatch.Success
+                            ? countryCodeMatch.Groups[1].Value.Trim().ToUpperInvariant()
+                            : null,
+                        PublicIp = ipMatch.Success
+                            ? ipMatch.Groups[1].Value.Trim()
+                            : null
+                    };
+                }
+            }
+
+            return null;
+        }
+
+        private static string ResolveSuggestedLanguageCode(TimeZoneDetectionResult detectedResult, string fallbackLanguageCode)
+        {
+            if (detectedResult == null)
+            {
+                return NormalizeLanguageCode(fallbackLanguageCode);
+            }
+
+            if (string.Equals(detectedResult.CountryCode, "VN", StringComparison.OrdinalIgnoreCase))
+            {
+                return "vi";
+            }
+
+            if (string.Equals(detectedResult.IanaTimeZone, "Asia/Ho_Chi_Minh", StringComparison.OrdinalIgnoreCase) ||
+                string.Equals(detectedResult.IanaTimeZone, "Asia/Saigon", StringComparison.OrdinalIgnoreCase))
+            {
+                return "vi";
+            }
+
+            return "en";
+        }
+
+        private static bool IsVietnameseLanguage(string languageCode)
+        {
+            return NormalizeLanguageCode(languageCode) == "vi";
+        }
+
+        private static string NormalizeLanguageCode(string languageCode)
+        {
+            if (string.IsNullOrWhiteSpace(languageCode))
+            {
+                return "en";
+            }
+
+            return languageCode.StartsWith("vi", StringComparison.OrdinalIgnoreCase)
+                ? "vi"
+                : "en";
+        }
+
+        private static string GetEndpointHost(string endpoint)
+        {
+            Uri uri;
+            return Uri.TryCreate(endpoint, UriKind.Absolute, out uri)
+                ? uri.Host
+                : string.Empty;
+        }
+
+        private static bool LooksLikeIanaTimeZone(string value)
+        {
+            return !string.IsNullOrWhiteSpace(value) &&
+                   value.IndexOf('/') > 0 &&
+                   value.IndexOf(' ') < 0 &&
+                   value.IndexOf('{') < 0;
         }
 
         private static string MapIanaToWindows(string ianaTimeZone)
         {
+            if (string.IsNullOrWhiteSpace(ianaTimeZone))
+            {
+                return null;
+            }
+
             string windowsTimeZone;
             return TimeZoneMappings.TryGetValue(ianaTimeZone, out windowsTimeZone)
                 ? windowsTimeZone
                 : null;
+        }
+
+        private class TimeZoneDetectionResult
+        {
+            public string IanaTimeZone { get; set; }
+            public string CountryCode { get; set; }
+            public string PublicIp { get; set; }
         }
 
         private static readonly Dictionary<string, string> TimeZoneMappings =
@@ -108,15 +303,21 @@ namespace BlockUpdateWindowsDefender.Services
                 { "Asia/Ho_Chi_Minh", "SE Asia Standard Time" },
                 { "Asia/Bangkok", "SE Asia Standard Time" },
                 { "Asia/Jakarta", "SE Asia Standard Time" },
+                { "Asia/Saigon", "SE Asia Standard Time" },
                 { "Asia/Singapore", "Singapore Standard Time" },
                 { "Asia/Kuala_Lumpur", "Singapore Standard Time" },
                 { "Asia/Manila", "Singapore Standard Time" },
                 { "Asia/Tokyo", "Tokyo Standard Time" },
                 { "Asia/Seoul", "Korea Standard Time" },
                 { "Asia/Shanghai", "China Standard Time" },
+                { "Asia/Chongqing", "China Standard Time" },
+                { "Asia/Chungking", "China Standard Time" },
+                { "Asia/Harbin", "China Standard Time" },
+                { "Asia/Urumqi", "China Standard Time" },
                 { "Asia/Hong_Kong", "China Standard Time" },
                 { "Asia/Taipei", "Taipei Standard Time" },
                 { "Asia/Kolkata", "India Standard Time" },
+                { "Asia/Calcutta", "India Standard Time" },
                 { "Asia/Dubai", "Arabian Standard Time" },
                 { "Asia/Riyadh", "Arab Standard Time" },
                 { "Asia/Jerusalem", "Israel Standard Time" },

@@ -8,5 +8,7 @@ namespace BlockUpdateWindowsDefender.Models
         public string Message { get; set; }
         public string TimeZoneDisplayName { get; set; }
         public DateTime LocalTime { get; set; }
+        public string SuggestedLanguageCode { get; set; }
+        public string DetectedPublicIp { get; set; }
     }
 }

@@ -1,0 +1,151 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="WindowTitle">Windows VPS Control Center</sys:String>
+    <sys:String x:Key="AppTitle">Windows VPS Control Center</sys:String>
+    <sys:String x:Key="AppSubtitle">Manage updates, security, time sync, and browser installation</sys:String>
+    <sys:String x:Key="LabelPublicIp">IP:</sys:String>
+    <sys:String x:Key="PublicIpUnknown">Unknown</sys:String>
+    <sys:String x:Key="PublicIpFormat">IP: {0}</sys:String>
+    <sys:String x:Key="ButtonLanguageVietnamese">Tiếng Việt</sys:String>
+    <sys:String x:Key="ButtonLanguageEnglish">English</sys:String>
+    <sys:String x:Key="LabelStatus">Status</sys:String>
+
+    <sys:String x:Key="TabControl">Control</sys:String>
+    <sys:String x:Key="TabBrowserInstall">Browser Install</sys:String>
+    <sys:String x:Key="TabVerification">Verification</sys:String>
+    <sys:String x:Key="TabTimeZone">Time Zone</sys:String>
+    <sys:String x:Key="TabActivityLog">Activity Log</sys:String>
+
+    <sys:String x:Key="SectionSystem">System</sys:String>
+    <sys:String x:Key="LabelComputerName">Computer Name</sys:String>
+    <sys:String x:Key="LabelWindowsEdition">Windows Edition</sys:String>
+    <sys:String x:Key="LabelVersionBuild">Version / Build</sys:String>
+    <sys:String x:Key="LabelCurrentTimeZone">Current Time Zone</sys:String>
+    <sys:String x:Key="SectionWindowsUpdate">Windows Update</sys:String>
+    <sys:String x:Key="ButtonRefresh">Refresh</sys:String>
+    <sys:String x:Key="ButtonEnableUpdate">Enable Update</sys:String>
+    <sys:String x:Key="ButtonDisableUpdate">Disable Update</sys:String>
+    <sys:String x:Key="SectionWindowsDefender">Windows Defender</sys:String>
+    <sys:String x:Key="ButtonEnableDefender">Enable Defender</sys:String>
+    <sys:String x:Key="ButtonDisableDefender">Disable Defender</sys:String>
+
+    <sys:String x:Key="SectionBrowserInstallation">Browser Installation</sys:String>
+    <sys:String x:Key="LabelCompatibilityProfile">Compatibility Profile</sys:String>
+    <sys:String x:Key="CheckboxSilentInstall">Silent install</sys:String>
+    <sys:String x:Key="LabelSelectBrowsers">Select browsers to install</sys:String>
+    <sys:String x:Key="BrowserChrome">Google Chrome</sys:String>
+    <sys:String x:Key="BrowserFirefox">Mozilla Firefox</sys:String>
+    <sys:String x:Key="BrowserEdge">Microsoft Edge</sys:String>
+    <sys:String x:Key="BrowserBrave">Brave Browser</sys:String>
+    <sys:String x:Key="BrowserOpera">Opera Browser</sys:String>
+    <sys:String x:Key="BrowserCentBrowser">CentBrowser</sys:String>
+    <sys:String x:Key="ButtonInstallSelectedBrowsers">Install Selected Browsers</sys:String>
+
+    <sys:String x:Key="SectionVerification">Windows Update Verification</sys:String>
+    <sys:String x:Key="VerificationSubtitle">Read-back of the current machine state after policy/service changes.</sys:String>
+    <sys:String x:Key="ButtonRefreshVerification">Refresh Verification</sys:String>
+    <sys:String x:Key="VerificationPolicyState">Policy State</sys:String>
+    <sys:String x:Key="VerificationManualUpdate">Manual Update</sys:String>
+    <sys:String x:Key="VerificationWuauserv">wuauserv</sys:String>
+    <sys:String x:Key="VerificationUsoSvc">UsoSvc</sys:String>
+    <sys:String x:Key="VerificationWaaSMedicSvc">WaaSMedicSvc</sys:String>
+    <sys:String x:Key="VerificationFooter">Best-effort hardening: Windows may still protect or restore some update components depending on OS version and service protections.</sys:String>
+
+    <sys:String x:Key="SectionTimeAndTimeZone">Time &amp; Time Zone</sys:String>
+    <sys:String x:Key="CheckboxAutoUpdateOnStartup">Auto update on app startup</sys:String>
+    <sys:String x:Key="CheckboxRunAtWindowsStartup">Run at Windows startup</sys:String>
+    <sys:String x:Key="LabelCurrentLocalTime">Current Local Time</sys:String>
+    <sys:String x:Key="LabelLastSyncResult">Last Sync Result</sys:String>
+    <sys:String x:Key="ButtonUpdateTimeNow">Update Time Now</sys:String>
+
+    <sys:String x:Key="SectionActivityLog">Activity Log</sys:String>
+    <sys:String x:Key="ButtonOpenLogFolder">Open Log Folder</sys:String>
+    <sys:String x:Key="SectionSoftwareUpdate">Software Update</sys:String>
+    <sys:String x:Key="LabelCurrentVersion">Current Version</sys:String>
+    <sys:String x:Key="LabelUpdateStatus">Update Status</sys:String>
+    <sys:String x:Key="CheckboxAutoUpdateOnStartup">Auto update app on startup</sys:String>
+    <sys:String x:Key="ButtonCheckAndUpdateNow">Check &amp; Update Now</sys:String>
+
+    <sys:String x:Key="StatusReady">Ready</sys:String>
+    <sys:String x:Key="StatusDetecting">Detecting...</sys:String>
+    <sys:String x:Key="MessageNoSyncYet">No sync yet.</sys:String>
+    <sys:String x:Key="DetailCheckingWindowsUpdate">Checking Windows Update status.</sys:String>
+    <sys:String x:Key="DetailCheckingDefender">Checking Microsoft Defender status.</sys:String>
+    <sys:String x:Key="BrowserProfileFormat">Windows compatibility profile: {0}</sys:String>
+
+    <sys:String x:Key="BusyLoadingCoreInfo">Loading core information...</sys:String>
+    <sys:String x:Key="BusyRefreshingStatus">Refreshing status...</sys:String>
+    <sys:String x:Key="BusyEnablingWindowsUpdate">Enabling Windows Update...</sys:String>
+    <sys:String x:Key="BusyDisablingWindowsUpdate">Disabling Windows Update...</sys:String>
+    <sys:String x:Key="BusyEnablingDefender">Enabling Defender...</sys:String>
+    <sys:String x:Key="BusyDisablingDefender">Disabling Defender...</sys:String>
+    <sys:String x:Key="BusySynchronizingTime">Synchronizing time...</sys:String>
+    <sys:String x:Key="BusyOpeningLogFolder">Opening log folder...</sys:String>
+    <sys:String x:Key="BusyInstallingBrowsers">Installing selected browsers...</sys:String>
+    <sys:String x:Key="BusyAutoTimeSyncBackground">Auto time sync in background...</sys:String>
+    <sys:String x:Key="BusySwitchingLanguage">Switching language...</sys:String>
+    <sys:String x:Key="BusyCheckingAppUpdate">Checking app update...</sys:String>
+
+    <sys:String x:Key="LogApplicationStarted">Application started.</sys:String>
+    <sys:String x:Key="LogAutoSyncEnabled">Auto sync at startup set to enabled.</sys:String>
+    <sys:String x:Key="LogAutoSyncDisabled">Auto sync at startup set to disabled.</sys:String>
+    <sys:String x:Key="LogRunAtStartupEnabled">Run at Windows startup set to enabled.</sys:String>
+    <sys:String x:Key="LogRunAtStartupDisabled">Run at Windows startup set to disabled.</sys:String>
+    <sys:String x:Key="LogSystemInfoRefreshed">System information refreshed.</sys:String>
+    <sys:String x:Key="LogWindowsUpdateEnabled">Windows Update enabled.</sys:String>
+    <sys:String x:Key="LogWindowsUpdateDisabled">Windows Update disabled.</sys:String>
+    <sys:String x:Key="LogDefenderEnabled">Microsoft Defender enabled.</sys:String>
+    <sys:String x:Key="LogDefenderDisabled">Microsoft Defender disabled.</sys:String>
+    <sys:String x:Key="LogAutoTimeSyncStarted">Auto time sync started in background.</sys:String>
+    <sys:String x:Key="LogAutoTimeSyncErrorFormat">Auto time sync error: {0}</sys:String>
+    <sys:String x:Key="LogErrorFormat">Error: {0}</sys:String>
+    <sys:String x:Key="LogFolderOpened">Log folder opened.</sys:String>
+    <sys:String x:Key="LogNoBrowserSelected">No browser selected for installation.</sys:String>
+    <sys:String x:Key="LogStartingBrowserInstallFormat">Starting browser install for {0} item(s).</sys:String>
+    <sys:String x:Key="LogLanguageSwitchedVietnamese">Language auto-switched to Vietnamese after time sync.</sys:String>
+    <sys:String x:Key="LogLanguageSwitchedEnglish">Language auto-switched to English after time sync.</sys:String>
+    <sys:String x:Key="LogLanguageSetVietnamese">Language switched to Vietnamese manually.</sys:String>
+    <sys:String x:Key="LogLanguageSetEnglish">Language switched to English manually.</sys:String>
+    <sys:String x:Key="LogAutoUpdateStarted">Auto update check started in background.</sys:String>
+    <sys:String x:Key="LogAutoUpdateErrorFormat">Auto update error: {0}</sys:String>
+    <sys:String x:Key="LogCheckingForUpdates">Checking for software updates...</sys:String>
+    <sys:String x:Key="LogUpdateAvailableFormat">New version detected: {0}. Downloading update...</sys:String>
+    <sys:String x:Key="LogNoUpdateAvailable">Software is up to date.</sys:String>
+    <sys:String x:Key="LogUpdateApplied">Update downloaded. App will restart to apply the new version.</sys:String>
+    <sys:String x:Key="LogUpdateApplyFailedFormat">Update failed: {0}</sys:String>
+    <sys:String x:Key="LogUpdateCheckFailedFormat">Could not check for updates: {0}</sys:String>
+
+    <sys:String x:Key="BrowserStatusNoSelection">No browser selected</sys:String>
+    <sys:String x:Key="BrowserStatusRunning">Running...</sys:String>
+    <sys:String x:Key="BrowserStatusCompleted">Completed</sys:String>
+
+    <sys:String x:Key="UpdateStatusEnabled">Enabled</sys:String>
+    <sys:String x:Key="UpdateStatusDisabled">Disabled</sys:String>
+    <sys:String x:Key="UpdateStatusDisabledHardened">Disabled (Hardened)</sys:String>
+    <sys:String x:Key="UpdateDetailHardened">Automatic Updates is disabled by policy and core update services are hardened where Windows allows it. Review Verification for exact service states.</sys:String>
+    <sys:String x:Key="UpdateDetailDisabled">Automatic Updates is disabled by local policy. Review Verification to confirm how much manual update access remains.</sys:String>
+    <sys:String x:Key="UpdateDetailEnabled">Automatic Updates is enabled. Windows Update services are allowed to run normally.</sys:String>
+    <sys:String x:Key="PolicyDisabledAndBlocked">Automatic Updates disabled and Windows Update access blocked</sys:String>
+    <sys:String x:Key="PolicyAutoDisabled">Automatic Updates disabled</sys:String>
+    <sys:String x:Key="PolicyAccessBlocked">Windows Update access blocked</sys:String>
+    <sys:String x:Key="PolicyNone">No blocking policy</sys:String>
+    <sys:String x:Key="ManualLikelyBlocked">Likely blocked</sys:String>
+    <sys:String x:Key="ManualPartiallyBlocked">Partially blocked (WaaSMedicSvc may recover update components)</sys:String>
+    <sys:String x:Key="ManualStillPossible">Still possible</sys:String>
+    <sys:String x:Key="ManualAvailable">Available</sys:String>
+    <sys:String x:Key="DefenderUnsupported">Unsupported</sys:String>
+    <sys:String x:Key="DefenderEnabled">Enabled</sys:String>
+    <sys:String x:Key="DefenderDisabled">Disabled</sys:String>
+    <sys:String x:Key="DefenderActionFailed">Action Failed</sys:String>
+    <sys:String x:Key="DefenderDetailTamper">Tamper Protection is enabled. Some changes can be blocked by Windows.</sys:String>
+    <sys:String x:Key="DefenderDetailManaged">Microsoft Defender is available and can be managed by this app.</sys:String>
+    <sys:String x:Key="DefenderDetailUnavailable">Microsoft Defender is not available on this Windows version.</sys:String>
+    <sys:String x:Key="DefenderDetailBlocked">Windows blocked the action.</sys:String>
+
+    <sys:String x:Key="UpdateStatusChecking">Checking...</sys:String>
+    <sys:String x:Key="UpdateStatusUpToDate">Up to date</sys:String>
+    <sys:String x:Key="UpdateStatusAvailableFormat">Update available: {0}</sys:String>
+    <sys:String x:Key="UpdateStatusApplying">Applying update...</sys:String>
+    <sys:String x:Key="UpdateStatusFailed">Update failed</sys:String>
+</ResourceDictionary>

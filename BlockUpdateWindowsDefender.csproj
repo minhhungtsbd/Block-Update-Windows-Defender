@@ -11,12 +11,12 @@
     <ApplicationIcon>Assets\AppIcon.ico</ApplicationIcon>
     <AssemblyTitle>Block Update Windows Defender</AssemblyTitle>
     <Product>Block Update Windows Defender</Product>
-    <Description>Local Windows tool for controlling Windows Update, Microsoft Defender, and time synchronization.</Description>
+    <Description>Windows VPS control center for update, defender, timezone sync, browser install, and self-update.</Description>
     <Company>minhhungtsbd</Company>
     <Authors>minhhungtsbd</Authors>
-    <Version>1.0.1</Version>
-    <FileVersion>1.0.1.0</FileVersion>
-    <InformationalVersion>1.0.1</InformationalVersion>
+    <Version>1.1.0</Version>
+    <FileVersion>1.1.0.0</FileVersion>
+    <InformationalVersion>1.1.0</InformationalVersion>
   </PropertyGroup>
 
   <ItemGroup>
@@ -27,5 +27,7 @@
     <Reference Include="System.Management" />
     <Reference Include="System.Net.Http" />
     <Reference Include="System.ServiceProcess" />
+    <Reference Include="System.IO.Compression" />
+    <Reference Include="System.IO.Compression.FileSystem" />
   </ItemGroup>
 </Project>

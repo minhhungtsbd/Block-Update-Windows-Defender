@@ -1,5 +1,6 @@
 using System;
 using System.IO;
+using System.Threading;
 using System.Windows;
 using System.Windows.Threading;
 
@@ -7,6 +8,8 @@ namespace BlockUpdateWindowsDefender
 {
     public partial class App : Application
     {
+        private static int _fatalErrorReported;
+
         public App()
         {
             DispatcherUnhandledException += OnDispatcherUnhandledException;
@@ -28,6 +31,11 @@ namespace BlockUpdateWindowsDefender
 
         private static void ReportFatalError(Exception exception)
         {
+            if (Interlocked.Exchange(ref _fatalErrorReported, 1) == 1)
+            {
+                return;
+            }
+
             var appFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.CommonApplicationData), "BlockUpdateWindowsDefender");
             Directory.CreateDirectory(appFolder);
             var logFile = Path.Combine(appFolder, "startup-error.log");

@@ -1,0 +1,151 @@
+<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+                    xmlns:sys="clr-namespace:System;assembly=mscorlib">
+    <sys:String x:Key="WindowTitle">Trung Tâm Quản Trị VPS Windows</sys:String>
+    <sys:String x:Key="AppTitle">Trung Tâm Quản Trị VPS Windows</sys:String>
+    <sys:String x:Key="AppSubtitle">Quản lý update, bảo mật, đồng bộ thời gian và cài trình duyệt</sys:String>
+    <sys:String x:Key="LabelPublicIp">IP:</sys:String>
+    <sys:String x:Key="PublicIpUnknown">Chưa có</sys:String>
+    <sys:String x:Key="PublicIpFormat">IP: {0}</sys:String>
+    <sys:String x:Key="ButtonLanguageVietnamese">Tiếng Việt</sys:String>
+    <sys:String x:Key="ButtonLanguageEnglish">English</sys:String>
+    <sys:String x:Key="LabelStatus">Trạng thái</sys:String>
+
+    <sys:String x:Key="TabControl">Điều khiển</sys:String>
+    <sys:String x:Key="TabBrowserInstall">Cài trình duyệt</sys:String>
+    <sys:String x:Key="TabVerification">Kiểm tra</sys:String>
+    <sys:String x:Key="TabTimeZone">Múi giờ</sys:String>
+    <sys:String x:Key="TabActivityLog">Nhật ký</sys:String>
+
+    <sys:String x:Key="SectionSystem">Hệ thống</sys:String>
+    <sys:String x:Key="LabelComputerName">Tên máy</sys:String>
+    <sys:String x:Key="LabelWindowsEdition">Phiên bản Windows</sys:String>
+    <sys:String x:Key="LabelVersionBuild">Version / Build</sys:String>
+    <sys:String x:Key="LabelCurrentTimeZone">Múi giờ hiện tại</sys:String>
+    <sys:String x:Key="SectionWindowsUpdate">Windows Update</sys:String>
+    <sys:String x:Key="ButtonRefresh">Tải lại</sys:String>
+    <sys:String x:Key="ButtonEnableUpdate">Bật Update</sys:String>
+    <sys:String x:Key="ButtonDisableUpdate">Tắt Update</sys:String>
+    <sys:String x:Key="SectionWindowsDefender">Windows Defender</sys:String>
+    <sys:String x:Key="ButtonEnableDefender">Bật Defender</sys:String>
+    <sys:String x:Key="ButtonDisableDefender">Tắt Defender</sys:String>
+
+    <sys:String x:Key="SectionBrowserInstallation">Cài đặt trình duyệt</sys:String>
+    <sys:String x:Key="LabelCompatibilityProfile">Profile tương thích</sys:String>
+    <sys:String x:Key="CheckboxSilentInstall">Cài đặt im lặng</sys:String>
+    <sys:String x:Key="LabelSelectBrowsers">Chọn trình duyệt cần cài</sys:String>
+    <sys:String x:Key="BrowserChrome">Google Chrome</sys:String>
+    <sys:String x:Key="BrowserFirefox">Mozilla Firefox</sys:String>
+    <sys:String x:Key="BrowserEdge">Microsoft Edge</sys:String>
+    <sys:String x:Key="BrowserBrave">Brave Browser</sys:String>
+    <sys:String x:Key="BrowserOpera">Opera Browser</sys:String>
+    <sys:String x:Key="BrowserCentBrowser">CentBrowser</sys:String>
+    <sys:String x:Key="ButtonInstallSelectedBrowsers">Cài các trình duyệt đã chọn</sys:String>
+
+    <sys:String x:Key="SectionVerification">Kiểm tra Windows Update</sys:String>
+    <sys:String x:Key="VerificationSubtitle">Đọc lại trạng thái thực tế sau khi thay đổi policy và service.</sys:String>
+    <sys:String x:Key="ButtonRefreshVerification">Làm mới kiểm tra</sys:String>
+    <sys:String x:Key="VerificationPolicyState">Trạng thái policy</sys:String>
+    <sys:String x:Key="VerificationManualUpdate">Update thủ công</sys:String>
+    <sys:String x:Key="VerificationWuauserv">wuauserv</sys:String>
+    <sys:String x:Key="VerificationUsoSvc">UsoSvc</sys:String>
+    <sys:String x:Key="VerificationWaaSMedicSvc">WaaSMedicSvc</sys:String>
+    <sys:String x:Key="VerificationFooter">Hardening theo best-effort: Windows vẫn có thể bảo vệ hoặc khôi phục một số thành phần update tùy theo OS và cơ chế bảo vệ service.</sys:String>
+
+    <sys:String x:Key="SectionTimeAndTimeZone">Thời gian &amp; Múi giờ</sys:String>
+    <sys:String x:Key="CheckboxAutoUpdateOnStartup">Tự động cập nhật khi mở app</sys:String>
+    <sys:String x:Key="CheckboxRunAtWindowsStartup">Chạy cùng Windows</sys:String>
+    <sys:String x:Key="LabelCurrentLocalTime">Thời gian local hiện tại</sys:String>
+    <sys:String x:Key="LabelLastSyncResult">Kết quả đồng bộ gần nhất</sys:String>
+    <sys:String x:Key="ButtonUpdateTimeNow">Đồng bộ ngay</sys:String>
+
+    <sys:String x:Key="SectionActivityLog">Nhật ký hoạt động</sys:String>
+    <sys:String x:Key="ButtonOpenLogFolder">Mở thư mục log</sys:String>
+    <sys:String x:Key="SectionSoftwareUpdate">Cập nhật phần mềm</sys:String>
+    <sys:String x:Key="LabelCurrentVersion">Phiên bản hiện tại</sys:String>
+    <sys:String x:Key="LabelUpdateStatus">Trạng thái cập nhật</sys:String>
+    <sys:String x:Key="CheckboxAutoUpdateOnStartup">Tự động cập nhật phần mềm khi khởi động</sys:String>
+    <sys:String x:Key="ButtonCheckAndUpdateNow">Kiểm tra &amp; Cập nhật ngay</sys:String>
+
+    <sys:String x:Key="StatusReady">Sẵn sàng</sys:String>
+    <sys:String x:Key="StatusDetecting">Đang nhận diện...</sys:String>
+    <sys:String x:Key="MessageNoSyncYet">Chưa đồng bộ.</sys:String>
+    <sys:String x:Key="DetailCheckingWindowsUpdate">Đang kiểm tra trạng thái Windows Update.</sys:String>
+    <sys:String x:Key="DetailCheckingDefender">Đang kiểm tra trạng thái Microsoft Defender.</sys:String>
+    <sys:String x:Key="BrowserProfileFormat">Profile tương thích Windows: {0}</sys:String>
+
+    <sys:String x:Key="BusyLoadingCoreInfo">Đang tải thông tin hệ thống...</sys:String>
+    <sys:String x:Key="BusyRefreshingStatus">Đang làm mới trạng thái...</sys:String>
+    <sys:String x:Key="BusyEnablingWindowsUpdate">Đang bật Windows Update...</sys:String>
+    <sys:String x:Key="BusyDisablingWindowsUpdate">Đang tắt Windows Update...</sys:String>
+    <sys:String x:Key="BusyEnablingDefender">Đang bật Defender...</sys:String>
+    <sys:String x:Key="BusyDisablingDefender">Đang tắt Defender...</sys:String>
+    <sys:String x:Key="BusySynchronizingTime">Đang đồng bộ thời gian...</sys:String>
+    <sys:String x:Key="BusyOpeningLogFolder">Đang mở thư mục log...</sys:String>
+    <sys:String x:Key="BusyInstallingBrowsers">Đang cài đặt trình duyệt đã chọn...</sys:String>
+    <sys:String x:Key="BusyAutoTimeSyncBackground">Tự động đồng bộ thời gian ở nền...</sys:String>
+    <sys:String x:Key="BusySwitchingLanguage">Đang chuyển ngôn ngữ...</sys:String>
+    <sys:String x:Key="BusyCheckingAppUpdate">Đang kiểm tra cập nhật phần mềm...</sys:String>
+
+    <sys:String x:Key="LogApplicationStarted">Ứng dụng đã khởi động.</sys:String>
+    <sys:String x:Key="LogAutoSyncEnabled">Đã bật tự động đồng bộ khi khởi động app.</sys:String>
+    <sys:String x:Key="LogAutoSyncDisabled">Đã tắt tự động đồng bộ khi khởi động app.</sys:String>
+    <sys:String x:Key="LogRunAtStartupEnabled">Đã bật chạy cùng Windows.</sys:String>
+    <sys:String x:Key="LogRunAtStartupDisabled">Đã tắt chạy cùng Windows.</sys:String>
+    <sys:String x:Key="LogSystemInfoRefreshed">Đã làm mới thông tin hệ thống.</sys:String>
+    <sys:String x:Key="LogWindowsUpdateEnabled">Đã bật Windows Update.</sys:String>
+    <sys:String x:Key="LogWindowsUpdateDisabled">Đã tắt Windows Update.</sys:String>
+    <sys:String x:Key="LogDefenderEnabled">Đã bật Microsoft Defender.</sys:String>
+    <sys:String x:Key="LogDefenderDisabled">Đã tắt Microsoft Defender.</sys:String>
+    <sys:String x:Key="LogAutoTimeSyncStarted">Đã bắt đầu tự động đồng bộ thời gian ở nền.</sys:String>
+    <sys:String x:Key="LogAutoTimeSyncErrorFormat">Lỗi tự động đồng bộ thời gian: {0}</sys:String>
+    <sys:String x:Key="LogErrorFormat">Lỗi: {0}</sys:String>
+    <sys:String x:Key="LogFolderOpened">Đã mở thư mục log.</sys:String>
+    <sys:String x:Key="LogNoBrowserSelected">Chưa chọn trình duyệt để cài đặt.</sys:String>
+    <sys:String x:Key="LogStartingBrowserInstallFormat">Bắt đầu cài đặt trình duyệt cho {0} mục.</sys:String>
+    <sys:String x:Key="LogLanguageSwitchedVietnamese">Đã tự động chuyển sang tiếng Việt sau khi đồng bộ thời gian.</sys:String>
+    <sys:String x:Key="LogLanguageSwitchedEnglish">Đã tự động chuyển sang tiếng Anh sau khi đồng bộ thời gian.</sys:String>
+    <sys:String x:Key="LogLanguageSetVietnamese">Đã chuyển ngôn ngữ thủ công sang tiếng Việt.</sys:String>
+    <sys:String x:Key="LogLanguageSetEnglish">Đã chuyển ngôn ngữ thủ công sang tiếng Anh.</sys:String>
+    <sys:String x:Key="LogAutoUpdateStarted">Đã bắt đầu kiểm tra tự động cập nhật ở nền.</sys:String>
+    <sys:String x:Key="LogAutoUpdateErrorFormat">Lỗi tự động cập nhật: {0}</sys:String>
+    <sys:String x:Key="LogCheckingForUpdates">Đang kiểm tra bản cập nhật phần mềm...</sys:String>
+    <sys:String x:Key="LogUpdateAvailableFormat">Phát hiện phiên bản mới: {0}. Đang tải bản cập nhật...</sys:String>
+    <sys:String x:Key="LogNoUpdateAvailable">Phần mềm đang ở phiên bản mới nhất.</sys:String>
+    <sys:String x:Key="LogUpdateApplied">Đã tải bản cập nhật. Ứng dụng sẽ khởi động lại để áp dụng phiên bản mới.</sys:String>
+    <sys:String x:Key="LogUpdateApplyFailedFormat">Cập nhật thất bại: {0}</sys:String>
+    <sys:String x:Key="LogUpdateCheckFailedFormat">Không thể kiểm tra cập nhật: {0}</sys:String>
+
+    <sys:String x:Key="BrowserStatusNoSelection">Chưa chọn trình duyệt</sys:String>
+    <sys:String x:Key="BrowserStatusRunning">Đang thực hiện...</sys:String>
+    <sys:String x:Key="BrowserStatusCompleted">Hoàn tất</sys:String>
+
+    <sys:String x:Key="UpdateStatusEnabled">Đã bật</sys:String>
+    <sys:String x:Key="UpdateStatusDisabled">Đã tắt</sys:String>
+    <sys:String x:Key="UpdateStatusDisabledHardened">Đã tắt (Hardened)</sys:String>
+    <sys:String x:Key="UpdateDetailHardened">Automatic Updates đã bị tắt bằng policy và các service update cốt lõi đã được harden trong phạm vi Windows cho phép. Xem tab Kiểm tra để biết trạng thái chi tiết.</sys:String>
+    <sys:String x:Key="UpdateDetailDisabled">Automatic Updates đã bị tắt bằng local policy. Xem tab Kiểm tra để xác nhận mức độ còn cho phép update thủ công.</sys:String>
+    <sys:String x:Key="UpdateDetailEnabled">Automatic Updates đang bật. Các service Windows Update được phép chạy bình thường.</sys:String>
+    <sys:String x:Key="PolicyDisabledAndBlocked">Automatic Updates đã tắt và quyền truy cập Windows Update đã bị chặn</sys:String>
+    <sys:String x:Key="PolicyAutoDisabled">Automatic Updates đã tắt</sys:String>
+    <sys:String x:Key="PolicyAccessBlocked">Quyền truy cập Windows Update đã bị chặn</sys:String>
+    <sys:String x:Key="PolicyNone">Không có policy chặn</sys:String>
+    <sys:String x:Key="ManualLikelyBlocked">Khả năng cao đã bị chặn</sys:String>
+    <sys:String x:Key="ManualPartiallyBlocked">Bị chặn một phần (WaaSMedicSvc có thể khôi phục thành phần update)</sys:String>
+    <sys:String x:Key="ManualStillPossible">Vẫn có thể cập nhật thủ công</sys:String>
+    <sys:String x:Key="ManualAvailable">Sẵn sàng</sys:String>
+    <sys:String x:Key="DefenderUnsupported">Không hỗ trợ</sys:String>
+    <sys:String x:Key="DefenderEnabled">Đã bật</sys:String>
+    <sys:String x:Key="DefenderDisabled">Đã tắt</sys:String>
+    <sys:String x:Key="DefenderActionFailed">Thao tác thất bại</sys:String>
+    <sys:String x:Key="DefenderDetailTamper">Tamper Protection đang bật. Một số thay đổi có thể bị Windows chặn.</sys:String>
+    <sys:String x:Key="DefenderDetailManaged">Microsoft Defender khả dụng và có thể được quản lý bởi ứng dụng này.</sys:String>
+    <sys:String x:Key="DefenderDetailUnavailable">Microsoft Defender không khả dụng trên phiên bản Windows này.</sys:String>
+    <sys:String x:Key="DefenderDetailBlocked">Windows đã chặn thao tác.</sys:String>
+
+    <sys:String x:Key="UpdateStatusChecking">Đang kiểm tra...</sys:String>
+    <sys:String x:Key="UpdateStatusUpToDate">Đã mới nhất</sys:String>
+    <sys:String x:Key="UpdateStatusAvailableFormat">Có bản mới: {0}</sys:String>
+    <sys:String x:Key="UpdateStatusApplying">Đang áp dụng cập nhật...</sys:String>
+    <sys:String x:Key="UpdateStatusFailed">Cập nhật thất bại</sys:String>
+</ResourceDictionary>

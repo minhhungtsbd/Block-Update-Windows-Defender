@@ -1,5 +1,5 @@
-using System.Management;
 using System.Threading.Tasks;
+using Microsoft.Win32;
 using BlockUpdateWindowsDefender.Models;
 
 namespace BlockUpdateWindowsDefender.Services
@@ -15,17 +15,24 @@ namespace BlockUpdateWindowsDefender.Services
                     ComputerName = System.Environment.MachineName
                 };
 
-                using (var searcher = new ManagementObjectSearcher("SELECT Caption, Version, BuildNumber, OSArchitecture FROM Win32_OperatingSystem"))
-                using (var results = searcher.Get())
+                try
                 {
-                    foreach (ManagementObject os in results)
+                    using (var key = Registry.LocalMachine.OpenSubKey(@"SOFTWARE\Microsoft\Windows NT\CurrentVersion"))
                     {
-                        model.Caption = os["Caption"]?.ToString() ?? "Unknown";
-                        model.Version = os["Version"]?.ToString() ?? "Unknown";
-                        model.BuildNumber = os["BuildNumber"]?.ToString() ?? "Unknown";
-                        model.Architecture = os["OSArchitecture"]?.ToString() ?? "Unknown";
-                        break;
+                        model.Caption = key?.GetValue("ProductName")?.ToString() ?? "Unknown";
+                        model.Version = key?.GetValue("CurrentVersion")?.ToString() ?? System.Environment.OSVersion.Version.ToString();
+                        model.BuildNumber = key?.GetValue("CurrentBuildNumber")?.ToString()
+                                            ?? key?.GetValue("CurrentBuild")?.ToString()
+                                            ?? "Unknown";
+                        model.Architecture = System.Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
                     }
+                }
+                catch
+                {
+                    model.Caption = "Unknown";
+                    model.Version = System.Environment.OSVersion.Version.ToString();
+                    model.BuildNumber = System.Environment.OSVersion.Version.Build.ToString();
+                    model.Architecture = System.Environment.Is64BitOperatingSystem ? "64-bit" : "32-bit";
                 }
 
                 return model;
