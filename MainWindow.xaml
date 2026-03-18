@@ -154,6 +154,16 @@
             <Setter Property="Margin" Value="0,8,0,0" />
         </Style>
 
+        <Style x:Key="BrowserInstallActionButtonStyle" TargetType="Button" BasedOn="{StaticResource PrimaryButtonStyle}">
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="MinHeight" Value="38" />
+            <Setter Property="MinWidth" Value="240" />
+            <Setter Property="Padding" Value="16,9" />
+            <Setter Property="HorizontalAlignment" Value="Left" />
+            <Setter Property="Margin" Value="0" />
+        </Style>
+
         <Style TargetType="TabControl">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
@@ -499,7 +509,6 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
-                                <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
@@ -589,10 +598,9 @@
                             </Grid>
 
                             <Border Grid.Row="5" Style="{StaticResource ActionBarBorderStyle}">
-                                <WrapPanel>
+                                <WrapPanel HorizontalAlignment="Left">
                                     <Button Content="{DynamicResource ButtonInstallSelectedBrowsers}"
-                                            Style="{StaticResource PrimaryButtonStyle}"
-                                            MinWidth="220"
+                                            Style="{StaticResource BrowserInstallActionButtonStyle}"
                                             Command="{Binding InstallBrowsersCommand}" />
                                 </WrapPanel>
                             </Border>
@@ -740,7 +748,7 @@
 
                             <TextBlock Text="{DynamicResource SectionTimeAndTimeZone}" Style="{StaticResource SectionTitleStyle}" />
                             <CheckBox Grid.Row="1"
-                                      Content="{DynamicResource CheckboxAutoUpdateOnStartup}"
+                                      Content="{DynamicResource CheckboxAutoSyncTimeOnStartup}"
                                       Foreground="White"
                                       IsChecked="{Binding AutoSyncTimeOnStartup, Mode=TwoWay}"
                                       Margin="0,16,0,10"
@@ -749,17 +757,70 @@
                                       Content="{DynamicResource CheckboxRunAtWindowsStartup}"
                                       Foreground="White"
                                       IsChecked="{Binding RunAtWindowsStartup, Mode=TwoWay}"
-                                      Margin="0,0,0,10"
-                                      FontSize="13" />
-
-                            <CheckBox Grid.Row="3"
-                                      Content="{DynamicResource CheckboxAutoUpdateOnStartup}"
-                                      Foreground="White"
-                                      IsChecked="{Binding AutoUpdateAppOnStartup, Mode=TwoWay}"
                                       Margin="0,0,0,18"
                                       FontSize="13" />
 
-                            <Border Grid.Row="4" Style="{StaticResource PanelBorderStyle}" Margin="0,0,0,16" Padding="14">
+                            <Grid Grid.Row="3" Margin="0,0,0,18">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+
+                                <StackPanel Margin="0,0,12,0">
+                                    <TextBlock Text="{DynamicResource LabelCurrentLocalTime}" Style="{StaticResource LabelStyle}" />
+                                    <TextBlock Text="{Binding CurrentLocalTimeText}" Style="{StaticResource ValueStyle}" />
+                                </StackPanel>
+
+                                <StackPanel Grid.Column="1" Margin="12,0,0,0">
+                                    <TextBlock Text="{DynamicResource LabelCurrentTimeZone}" Style="{StaticResource LabelStyle}" />
+                                    <TextBlock Text="{Binding CurrentTimeZone}" Style="{StaticResource ValueStyle}" />
+                                </StackPanel>
+                            </Grid>
+
+                            <StackPanel Grid.Row="4">
+                                <TextBlock Text="{DynamicResource LabelLastSyncResult}" Style="{StaticResource LabelStyle}" />
+                                <Border Background="#0B1220" BorderBrush="#1F2937" BorderThickness="1" CornerRadius="12" Padding="14">
+                                    <TextBlock Text="{Binding LastTimeSyncMessage}"
+                                               Foreground="White"
+                                               TextWrapping="Wrap"
+                                               FontSize="14"
+                                               FontWeight="SemiBold" />
+                                    </Border>
+                            </StackPanel>
+
+                            <Button Grid.Row="5"
+                                    Content="{DynamicResource ButtonUpdateTimeNow}"
+                                    Style="{StaticResource PrimaryButtonStyle}"
+                                    Margin="0,14,0,0"
+                                    HorizontalAlignment="Left"
+                                    MinWidth="180"
+                                    Command="{Binding SyncTimeCommand}" />
+                        </Grid>
+                    </Border>
+                </Grid>
+            </TabItem>
+
+            <TabItem Header="{DynamicResource TabSoftwareUpdate}">
+                <Grid Margin="0,16,0,0">
+                    <Border Style="{StaticResource PanelBorderStyle}" Margin="0">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
+                            </Grid.RowDefinitions>
+
+                            <TextBlock Text="{DynamicResource SectionSoftwareUpdate}" Style="{StaticResource SectionTitleStyle}" />
+
+                            <CheckBox Grid.Row="1"
+                                      Content="{DynamicResource CheckboxAutoUpdateAppOnStartup}"
+                                      Foreground="White"
+                                      IsChecked="{Binding AutoUpdateAppOnStartup, Mode=TwoWay}"
+                                      Margin="0,16,0,18"
+                                      FontSize="13" />
+
+                            <Border Grid.Row="2" Style="{StaticResource PanelBorderStyle}" Margin="0,0,0,0" Padding="14">
                                 <Grid>
                                     <Grid.ColumnDefinitions>
                                         <ColumnDefinition Width="*" />
@@ -787,42 +848,6 @@
                                             Command="{Binding CheckAndUpdateAppCommand}" />
                                 </Grid>
                             </Border>
-
-                            <Grid Grid.Row="5" Margin="0,0,0,18">
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="*" />
-                                    <ColumnDefinition Width="*" />
-                                </Grid.ColumnDefinitions>
-
-                                <StackPanel Margin="0,0,12,0">
-                                    <TextBlock Text="{DynamicResource LabelCurrentLocalTime}" Style="{StaticResource LabelStyle}" />
-                                    <TextBlock Text="{Binding CurrentLocalTimeText}" Style="{StaticResource ValueStyle}" />
-                                </StackPanel>
-
-                                <StackPanel Grid.Column="1" Margin="12,0,0,0">
-                                    <TextBlock Text="{DynamicResource LabelCurrentTimeZone}" Style="{StaticResource LabelStyle}" />
-                                    <TextBlock Text="{Binding CurrentTimeZone}" Style="{StaticResource ValueStyle}" />
-                                </StackPanel>
-                            </Grid>
-
-                            <StackPanel Grid.Row="6">
-                                <TextBlock Text="{DynamicResource LabelLastSyncResult}" Style="{StaticResource LabelStyle}" />
-                                <Border Background="#0B1220" BorderBrush="#1F2937" BorderThickness="1" CornerRadius="12" Padding="14">
-                                    <TextBlock Text="{Binding LastTimeSyncMessage}"
-                                               Foreground="White"
-                                               TextWrapping="Wrap"
-                                               FontSize="14"
-                                               FontWeight="SemiBold" />
-                                </Border>
-                            </StackPanel>
-
-                            <Button Grid.Row="7"
-                                    Content="{DynamicResource ButtonUpdateTimeNow}"
-                                    Style="{StaticResource PrimaryButtonStyle}"
-                                    Margin="0,14,0,0"
-                                    HorizontalAlignment="Left"
-                                    MinWidth="180"
-                                    Command="{Binding SyncTimeCommand}" />
                         </Grid>
                     </Border>
                 </Grid>

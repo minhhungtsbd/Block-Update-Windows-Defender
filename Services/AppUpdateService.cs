@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.IO.Compression;
@@ -12,8 +13,13 @@ namespace BlockUpdateWindowsDefender.Services
 {
     public class AppUpdateService
     {
+        private const string UpdateManifestUrl = "https://raw.githubusercontent.com/minhhungtsbd/Block-Update-Windows-Defender/main/release/latest.json";
         private const string ReleaseApiUrl = "https://api.github.com/repos/minhhungtsbd/Block-Update-Windows-Defender/releases/latest";
+        private const string ReleaseFolderApiUrl = "https://api.github.com/repos/minhhungtsbd/Block-Update-Windows-Defender/contents/release";
+        private const string ReleaseFolderPageUrl = "https://github.com/minhhungtsbd/Block-Update-Windows-Defender/tree/main/release";
+        private const string RawReleaseBaseUrl = "https://raw.githubusercontent.com/minhhungtsbd/Block-Update-Windows-Defender/main/release/";
         private const string AppExeName = "BlockUpdateWindowsDefender.exe";
+        private const string ReleaseZipFilePrefix = "Block-Update-Windows-Defender-v";
 
         public Task<AppUpdateCheckResult> CheckForUpdateAsync()
         {
@@ -22,35 +28,41 @@ namespace BlockUpdateWindowsDefender.Services
                 try
                 {
                     ServicePointManager.SecurityProtocol |= SecurityProtocolType.Tls12;
+                    var currentVersion = Assembly.GetExecutingAssembly().GetName().Version ?? new Version(0, 0);
+                    var candidate = default(UpdateCandidate);
+                    var errors = new List<string>();
 
                     using (var client = new WebClient())
                     {
                         client.Headers[HttpRequestHeader.UserAgent] = "BlockUpdateWindowsDefender/1.0";
-                        var json = client.DownloadString(ReleaseApiUrl);
+                        client.Headers[HttpRequestHeader.Accept] = "application/vnd.github+json";
 
-                        var tag = ExtractJsonValue(json, "tag_name");
-                        var downloadUrl = ExtractZipDownloadUrl(json);
+                        // Order: raw manifest -> releases API -> contents API -> HTML folder scrape
+                        // so the updater keeps working even when GitHub API responds 403/404.
+                        candidate = TryGetCandidate(() => GetReleaseCandidateFromManifest(client), errors);
+                        candidate = candidate ?? TryGetCandidate(() => GetReleaseCandidateFromReleasesApi(client), errors);
+                        candidate = candidate ?? TryGetCandidate(() => GetReleaseCandidateFromReleaseFolder(client), errors);
+                        candidate = candidate ?? TryGetCandidate(() => GetReleaseCandidateFromReleaseFolderPage(client), errors);
 
-                        if (string.IsNullOrWhiteSpace(tag) || string.IsNullOrWhiteSpace(downloadUrl))
+                        if (candidate == null)
                         {
                             return new AppUpdateCheckResult
                             {
                                 IsSuccess = false,
-                                ErrorMessage = "Could not read release metadata from GitHub."
+                                CurrentVersionText = currentVersion.ToString(),
+                                ErrorMessage = BuildCandidateErrorMessage(errors)
                             };
                         }
 
-                        var latestVersion = ParseVersion(tag);
-                        var currentVersion = Assembly.GetExecutingAssembly().GetName().Version ?? new Version(0, 0);
-                        var isUpdateAvailable = latestVersion > currentVersion;
+                        var isUpdateAvailable = candidate.Version > currentVersion;
 
                         return new AppUpdateCheckResult
                         {
                             IsSuccess = true,
                             IsUpdateAvailable = isUpdateAvailable,
                             CurrentVersionText = currentVersion.ToString(),
-                            LatestVersionText = tag,
-                            DownloadUrl = downloadUrl
+                            LatestVersionText = candidate.VersionText,
+                            DownloadUrl = candidate.DownloadUrl
                         };
                     }
                 }
@@ -165,6 +177,196 @@ namespace BlockUpdateWindowsDefender.Services
             return (value ?? string.Empty).Replace("^", "^^").Replace("&", "^&");
         }
 
+        private static UpdateCandidate GetReleaseCandidateFromReleasesApi(WebClient client)
+        {
+            var json = client.DownloadString(ReleaseApiUrl);
+            var tag = ExtractJsonValue(json, "tag_name");
+            var downloadUrl = ExtractZipDownloadUrl(json);
+            if (string.IsNullOrWhiteSpace(tag) || string.IsNullOrWhiteSpace(downloadUrl))
+            {
+                return null;
+            }
+
+            return new UpdateCandidate
+            {
+                VersionText = tag,
+                Version = ParseVersion(tag),
+                DownloadUrl = downloadUrl
+            };
+        }
+
+        private static UpdateCandidate GetReleaseCandidateFromManifest(WebClient client)
+        {
+            var json = client.DownloadString(UpdateManifestUrl);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return null;
+            }
+
+            var versionText = ExtractJsonValue(json, "version");
+            if (string.IsNullOrWhiteSpace(versionText))
+            {
+                versionText = ExtractJsonValue(json, "latestVersion");
+            }
+
+            var downloadUrl = ExtractJsonValue(json, "downloadUrl");
+            if (string.IsNullOrWhiteSpace(downloadUrl))
+            {
+                return null;
+            }
+
+            var parsedVersion = ParseVersion(versionText);
+            if (parsedVersion.Major == 0 && parsedVersion.Minor == 0)
+            {
+                return null;
+            }
+
+            return new UpdateCandidate
+            {
+                Version = parsedVersion,
+                VersionText = "v" + parsedVersion,
+                DownloadUrl = downloadUrl
+            };
+        }
+
+        private static UpdateCandidate GetReleaseCandidateFromReleaseFolder(WebClient client)
+        {
+            var json = client.DownloadString(ReleaseFolderApiUrl);
+            if (string.IsNullOrWhiteSpace(json))
+            {
+                return null;
+            }
+
+            UpdateCandidate selected = null;
+            var itemMatches = Regex.Matches(
+                json,
+                "\"name\"\\s*:\\s*\"([^\"]+)\"[\\s\\S]*?\"download_url\"\\s*:\\s*\"([^\"]+)\"",
+                RegexOptions.IgnoreCase);
+
+            foreach (Match item in itemMatches)
+            {
+                if (!item.Success || item.Groups.Count < 3)
+                {
+                    continue;
+                }
+
+                var fileName = item.Groups[1].Value.Trim();
+                var downloadUrl = item.Groups[2].Value.Trim().Replace("\\/", "/");
+                if (string.IsNullOrWhiteSpace(downloadUrl))
+                {
+                    continue;
+                }
+
+                var version = ParseVersionFromReleaseFileName(fileName);
+                if (version == null)
+                {
+                    continue;
+                }
+
+                if (selected == null || version > selected.Version)
+                {
+                    selected = new UpdateCandidate
+                    {
+                        Version = version,
+                        VersionText = "v" + version,
+                        DownloadUrl = downloadUrl
+                    };
+                }
+            }
+
+            return selected;
+        }
+
+        private static UpdateCandidate GetReleaseCandidateFromReleaseFolderPage(WebClient client)
+        {
+            var html = client.DownloadString(ReleaseFolderPageUrl);
+            if (string.IsNullOrWhiteSpace(html))
+            {
+                return null;
+            }
+
+            UpdateCandidate selected = null;
+            var matches = Regex.Matches(html, "Block-Update-Windows-Defender-v(\\d+(?:\\.\\d+){1,3})\\.zip", RegexOptions.IgnoreCase);
+            foreach (Match match in matches)
+            {
+                if (!match.Success || match.Groups.Count < 2)
+                {
+                    continue;
+                }
+
+                var versionText = match.Groups[1].Value.Trim();
+                var version = ParseVersion(versionText);
+                if (version.Major == 0 && version.Minor == 0)
+                {
+                    continue;
+                }
+
+                if (selected == null || version > selected.Version)
+                {
+                    var fileName = ReleaseZipFilePrefix + versionText + ".zip";
+                    selected = new UpdateCandidate
+                    {
+                        Version = version,
+                        VersionText = "v" + version,
+                        DownloadUrl = RawReleaseBaseUrl + fileName
+                    };
+                }
+            }
+
+            return selected;
+        }
+
+        private static UpdateCandidate TryGetCandidate(Func<UpdateCandidate> candidateProvider, ICollection<string> errors)
+        {
+            try
+            {
+                return candidateProvider();
+            }
+            catch (Exception ex)
+            {
+                if (errors != null && !string.IsNullOrWhiteSpace(ex.Message))
+                {
+                    errors.Add(ex.Message);
+                }
+
+                return null;
+            }
+        }
+
+        private static string BuildCandidateErrorMessage(IList<string> errors)
+        {
+            if (errors == null || errors.Count == 0)
+            {
+                return "Could not find a valid update package.";
+            }
+
+            var first = errors.FirstOrDefault(message => !string.IsNullOrWhiteSpace(message));
+            return string.IsNullOrWhiteSpace(first)
+                ? "Could not find a valid update package."
+                : first;
+        }
+
+        private static Version ParseVersionFromReleaseFileName(string fileName)
+        {
+            if (string.IsNullOrWhiteSpace(fileName))
+            {
+                return null;
+            }
+
+            if (!fileName.StartsWith(ReleaseZipFilePrefix, StringComparison.OrdinalIgnoreCase) ||
+                !fileName.EndsWith(".zip", StringComparison.OrdinalIgnoreCase))
+            {
+                return null;
+            }
+
+            var versionText = fileName.Substring(
+                ReleaseZipFilePrefix.Length,
+                fileName.Length - ReleaseZipFilePrefix.Length - 4);
+
+            var parsed = ParseVersion(versionText);
+            return parsed.Major == 0 && parsed.Minor == 0 ? null : parsed;
+        }
+
         private static string ExtractZipDownloadUrl(string json)
         {
             if (string.IsNullOrWhiteSpace(json))
@@ -240,6 +442,13 @@ namespace BlockUpdateWindowsDefender.Services
             var build = version.Build < 0 ? 0 : version.Build;
             var revision = version.Revision < 0 ? 0 : version.Revision;
             return new Version(version.Major, version.Minor, build, revision);
+        }
+
+        private class UpdateCandidate
+        {
+            public Version Version { get; set; }
+            public string VersionText { get; set; }
+            public string DownloadUrl { get; set; }
         }
     }
 

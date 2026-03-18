@@ -15,6 +15,7 @@
     <sys:String x:Key="TabBrowserInstall">Browser Install</sys:String>
     <sys:String x:Key="TabVerification">Verification</sys:String>
     <sys:String x:Key="TabTimeZone">Time Zone</sys:String>
+    <sys:String x:Key="TabSoftwareUpdate">Software Update</sys:String>
     <sys:String x:Key="TabActivityLog">Activity Log</sys:String>
 
     <sys:String x:Key="SectionSystem">System</sys:String>
@@ -53,7 +54,7 @@
     <sys:String x:Key="VerificationFooter">Best-effort hardening: Windows may still protect or restore some update components depending on OS version and service protections.</sys:String>
 
     <sys:String x:Key="SectionTimeAndTimeZone">Time &amp; Time Zone</sys:String>
-    <sys:String x:Key="CheckboxAutoUpdateOnStartup">Auto update on app startup</sys:String>
+    <sys:String x:Key="CheckboxAutoSyncTimeOnStartup">Auto update on app startup</sys:String>
     <sys:String x:Key="CheckboxRunAtWindowsStartup">Run at Windows startup</sys:String>
     <sys:String x:Key="LabelCurrentLocalTime">Current Local Time</sys:String>
     <sys:String x:Key="LabelLastSyncResult">Last Sync Result</sys:String>
@@ -64,7 +65,7 @@
     <sys:String x:Key="SectionSoftwareUpdate">Software Update</sys:String>
     <sys:String x:Key="LabelCurrentVersion">Current Version</sys:String>
     <sys:String x:Key="LabelUpdateStatus">Update Status</sys:String>
-    <sys:String x:Key="CheckboxAutoUpdateOnStartup">Auto update app on startup</sys:String>
+    <sys:String x:Key="CheckboxAutoUpdateAppOnStartup">Auto update app on startup</sys:String>
     <sys:String x:Key="ButtonCheckAndUpdateNow">Check &amp; Update Now</sys:String>
 
     <sys:String x:Key="StatusReady">Ready</sys:String>

@@ -15,6 +15,7 @@
     <sys:String x:Key="TabBrowserInstall">Cài trình duyệt</sys:String>
     <sys:String x:Key="TabVerification">Kiểm tra</sys:String>
     <sys:String x:Key="TabTimeZone">Múi giờ</sys:String>
+    <sys:String x:Key="TabSoftwareUpdate">Cập nhật</sys:String>
     <sys:String x:Key="TabActivityLog">Nhật ký</sys:String>
 
     <sys:String x:Key="SectionSystem">Hệ thống</sys:String>
@@ -53,7 +54,7 @@
     <sys:String x:Key="VerificationFooter">Hardening theo best-effort: Windows vẫn có thể bảo vệ hoặc khôi phục một số thành phần update tùy theo OS và cơ chế bảo vệ service.</sys:String>
 
     <sys:String x:Key="SectionTimeAndTimeZone">Thời gian &amp; Múi giờ</sys:String>
-    <sys:String x:Key="CheckboxAutoUpdateOnStartup">Tự động cập nhật khi mở app</sys:String>
+    <sys:String x:Key="CheckboxAutoSyncTimeOnStartup">Tự động cập nhật khi mở app</sys:String>
     <sys:String x:Key="CheckboxRunAtWindowsStartup">Chạy cùng Windows</sys:String>
     <sys:String x:Key="LabelCurrentLocalTime">Thời gian local hiện tại</sys:String>
     <sys:String x:Key="LabelLastSyncResult">Kết quả đồng bộ gần nhất</sys:String>
@@ -64,7 +65,7 @@
     <sys:String x:Key="SectionSoftwareUpdate">Cập nhật phần mềm</sys:String>
     <sys:String x:Key="LabelCurrentVersion">Phiên bản hiện tại</sys:String>
     <sys:String x:Key="LabelUpdateStatus">Trạng thái cập nhật</sys:String>
-    <sys:String x:Key="CheckboxAutoUpdateOnStartup">Tự động cập nhật phần mềm khi khởi động</sys:String>
+    <sys:String x:Key="CheckboxAutoUpdateAppOnStartup">Tự động cập nhật phần mềm khi khởi động</sys:String>
     <sys:String x:Key="ButtonCheckAndUpdateNow">Kiểm tra &amp; Cập nhật ngay</sys:String>
 
     <sys:String x:Key="StatusReady">Sẵn sàng</sys:String>
