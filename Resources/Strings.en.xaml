@@ -7,16 +7,18 @@
     <sys:String x:Key="LabelPublicIp">IP:</sys:String>
     <sys:String x:Key="PublicIpUnknown">Unknown</sys:String>
     <sys:String x:Key="PublicIpFormat">IP: {0}</sys:String>
+    <sys:String x:Key="HeaderUserUnknown">Unknown</sys:String>
+    <sys:String x:Key="HeaderConnectionInfoFormat">IP: {0}   |   User: {1}   |   RDP Port: {2}</sys:String>
     <sys:String x:Key="ButtonLanguageVietnamese">Tiếng Việt</sys:String>
     <sys:String x:Key="ButtonLanguageEnglish">English</sys:String>
     <sys:String x:Key="LabelStatus">Status</sys:String>
 
-    <sys:String x:Key="TabControl">Control</sys:String>
-    <sys:String x:Key="TabBrowserInstall">Browser Install</sys:String>
-    <sys:String x:Key="TabVerification">Verification</sys:String>
-    <sys:String x:Key="TabTimeZone">Time Zone</sys:String>
-    <sys:String x:Key="TabSoftwareUpdate">Software Update</sys:String>
-    <sys:String x:Key="TabActivityLog">Activity Log</sys:String>
+    <sys:String x:Key="TabControl">Update &amp; Defender</sys:String>
+    <sys:String x:Key="TabBrowserInstall">Browser Setup</sys:String>
+    <sys:String x:Key="TabAccessTools">Access &amp; Security</sys:String>
+    <sys:String x:Key="TabTimeZone">Time Sync</sys:String>
+    <sys:String x:Key="TabSoftwareUpdate">App Update</sys:String>
+    <sys:String x:Key="TabActivityLog">Logs</sys:String>
 
     <sys:String x:Key="SectionSystem">System</sys:String>
     <sys:String x:Key="LabelComputerName">Computer Name</sys:String>
@@ -58,11 +60,41 @@
     <sys:String x:Key="VerificationFooter">Best-effort hardening: Windows may still protect or restore some update and Defender components depending on OS version and service protections.</sys:String>
 
     <sys:String x:Key="SectionTimeAndTimeZone">Time &amp; Time Zone</sys:String>
-    <sys:String x:Key="CheckboxAutoSyncTimeOnStartup">Auto update on app startup</sys:String>
+    <sys:String x:Key="CheckboxAutoSyncTimeOnStartup">Auto update time &amp; time zone on app startup</sys:String>
+    <sys:String x:Key="CheckboxAutoDetectTimeZoneFromIp">Auto detect time &amp; time zone from IP</sys:String>
+    <sys:String x:Key="CheckboxManualUpdateTimeAndTimeZone">Manual update time &amp; time zone</sys:String>
+    <sys:String x:Key="LabelManualTimeZoneSelection">Manual Time Zone</sys:String>
     <sys:String x:Key="CheckboxRunAtWindowsStartup">Run at Windows startup</sys:String>
     <sys:String x:Key="LabelCurrentLocalTime">Current Local Time</sys:String>
     <sys:String x:Key="LabelLastSyncResult">Last Sync Result</sys:String>
     <sys:String x:Key="ButtonUpdateTimeNow">Update Time Now</sys:String>
+
+    <sys:String x:Key="SectionAccessTools">Access &amp; Security Tools</sys:String>
+    <sys:String x:Key="SectionPasswordChange">Windows Password</sys:String>
+    <sys:String x:Key="PasswordChangeHint">For safety, copy and save the new password before applying it.</sys:String>
+    <sys:String x:Key="LabelNewPassword">New password</sys:String>
+    <sys:String x:Key="LabelConfirmPassword">Confirm password</sys:String>
+    <sys:String x:Key="CheckboxPasswordCopied">I have copied and saved the new password.</sys:String>
+    <sys:String x:Key="ButtonChangePassword">Change Windows Password</sys:String>
+    <sys:String x:Key="SectionRdpPort">RDP Port</sys:String>
+    <sys:String x:Key="RdpPortHint">Use a custom TCP port in range 1024-65535. App will restart Remote Desktop Service to apply without reboot.</sys:String>
+    <sys:String x:Key="LabelNewRdpPort">New RDP port</sys:String>
+    <sys:String x:Key="ButtonChangeRdpPort">Change RDP Port</sys:String>
+    <sys:String x:Key="SectionDiskTools">Disk Expansion</sys:String>
+    <sys:String x:Key="DiskExtendHint">Extend the current C: volume with available unallocated space.</sys:String>
+    <sys:String x:Key="CheckboxAutoExtendSystemDriveOnStartup">Auto extend C: drive on app startup</sys:String>
+    <sys:String x:Key="ButtonExtendSystemDriveNow">Extend C: Drive Now</sys:String>
+    <sys:String x:Key="DiskExtendNotRunYet">Not run yet</sys:String>
+    <sys:String x:Key="DiskExtendNoSpaceStatus">No unallocated space to extend C:</sys:String>
+    <sys:String x:Key="SectionRdpHistory">RDP Login IP History (30 days)</sys:String>
+    <sys:String x:Key="ButtonRefreshRdpHistory">Load RDP History</sys:String>
+    <sys:String x:Key="RdpHistoryNotLoaded">RDP history not loaded yet.</sys:String>
+    <sys:String x:Key="RdpHistorySummaryFormat">Found {0} login record(s). Source: {1}</sys:String>
+    <sys:String x:Key="RdpHistoryErrorFormat">Could not load RDP history: {0}</sys:String>
+    <sys:String x:Key="RdpColumnTime">Time</sys:String>
+    <sys:String x:Key="RdpColumnUser">User</sys:String>
+    <sys:String x:Key="RdpColumnIp">IP Address</sys:String>
+    <sys:String x:Key="RdpColumnHost">Host</sys:String>
 
     <sys:String x:Key="SectionActivityLog">Activity Log</sys:String>
     <sys:String x:Key="ButtonOpenLogFolder">Open Log Folder</sys:String>
@@ -75,6 +107,9 @@
     <sys:String x:Key="SoftwareUpdateOpenSourceDescription">GitHub repository:</sys:String>
 
     <sys:String x:Key="StatusReady">Ready</sys:String>
+    <sys:String x:Key="StatusCompleted">Completed</sys:String>
+    <sys:String x:Key="StatusFailed">Failed</sys:String>
+    <sys:String x:Key="StatusWarning">Warning</sys:String>
     <sys:String x:Key="StatusDetecting">Detecting...</sys:String>
     <sys:String x:Key="MessageNoSyncYet">No sync yet.</sys:String>
     <sys:String x:Key="DetailCheckingWindowsUpdate">Checking Windows Update status.</sys:String>
@@ -93,10 +128,16 @@
     <sys:String x:Key="BusyAutoTimeSyncBackground">Auto time sync in background...</sys:String>
     <sys:String x:Key="BusySwitchingLanguage">Switching language...</sys:String>
     <sys:String x:Key="BusyCheckingAppUpdate">Checking app update...</sys:String>
+    <sys:String x:Key="BusyChangingPassword">Changing Windows password...</sys:String>
+    <sys:String x:Key="BusyChangingRdpPort">Changing RDP port...</sys:String>
+    <sys:String x:Key="BusyExtendingSystemDrive">Extending drive C:...</sys:String>
+    <sys:String x:Key="BusyLoadingRdpHistory">Loading RDP history...</sys:String>
 
     <sys:String x:Key="LogApplicationStarted">Application started.</sys:String>
     <sys:String x:Key="LogAutoSyncEnabled">Auto sync at startup set to enabled.</sys:String>
     <sys:String x:Key="LogAutoSyncDisabled">Auto sync at startup set to disabled.</sys:String>
+    <sys:String x:Key="LogAutoExtendEnabled">Auto extend C: at startup set to enabled.</sys:String>
+    <sys:String x:Key="LogAutoExtendDisabled">Auto extend C: at startup set to disabled.</sys:String>
     <sys:String x:Key="LogRunAtStartupEnabled">Run at Windows startup set to enabled.</sys:String>
     <sys:String x:Key="LogRunAtStartupDisabled">Run at Windows startup set to disabled.</sys:String>
     <sys:String x:Key="LogSystemInfoRefreshed">System information refreshed.</sys:String>
@@ -122,6 +163,22 @@
     <sys:String x:Key="LogUpdateApplied">Update downloaded. App will restart to apply the new version.</sys:String>
     <sys:String x:Key="LogUpdateApplyFailedFormat">Update failed: {0}</sys:String>
     <sys:String x:Key="LogUpdateCheckFailedFormat">Could not check for updates: {0}</sys:String>
+    <sys:String x:Key="LogPasswordConfirmRequired">Password change blocked: please confirm you have copied the new password.</sys:String>
+    <sys:String x:Key="LogPasswordRequired">Password change blocked: password fields cannot be empty.</sys:String>
+    <sys:String x:Key="LogPasswordTooShort">Password change blocked: password must be at least 8 characters.</sys:String>
+    <sys:String x:Key="LogPasswordMismatch">Password change blocked: confirmation password does not match.</sys:String>
+    <sys:String x:Key="LogPasswordChanged">Windows password changed successfully.</sys:String>
+    <sys:String x:Key="LogPasswordChangeFailedFormat">Could not change Windows password: {0}</sys:String>
+    <sys:String x:Key="LogRdpPortInvalid">RDP port is invalid. Use a number from 1024 to 65535.</sys:String>
+    <sys:String x:Key="LogRdpPortChangedFormat">RDP port changed to {0}. RDP service restarted. Session may disconnect briefly; reconnect with new port.</sys:String>
+    <sys:String x:Key="LogRdpPortChangeFailedFormat">Could not change RDP port: {0}</sys:String>
+    <sys:String x:Key="LogDiskExtendSuccess">System drive C: extended successfully.</sys:String>
+    <sys:String x:Key="LogDiskExtendFailedFormat">Could not extend drive C: {0}</sys:String>
+    <sys:String x:Key="LogAutoExtendStarted">Auto disk extension started in background.</sys:String>
+    <sys:String x:Key="LogAutoExtendCompleted">Auto disk extension completed.</sys:String>
+    <sys:String x:Key="LogAutoExtendFailedFormat">Auto disk extension failed: {0}</sys:String>
+    <sys:String x:Key="LogRdpHistoryLoadedFormat">RDP history loaded: {0} record(s) from {1}.</sys:String>
+    <sys:String x:Key="LogRdpHistoryFailedFormat">Could not load RDP history: {0}</sys:String>
 
     <sys:String x:Key="BrowserStatusNoSelection">No browser selected</sys:String>
     <sys:String x:Key="BrowserStatusRunning">Running...</sys:String>
@@ -130,8 +187,8 @@
     <sys:String x:Key="UpdateStatusEnabled">Enabled</sys:String>
     <sys:String x:Key="UpdateStatusDisabled">Disabled</sys:String>
     <sys:String x:Key="UpdateStatusDisabledHardened">Disabled (Hardened)</sys:String>
-    <sys:String x:Key="UpdateDetailHardened">Automatic Updates is disabled by policy and core update services are hardened where Windows allows it. Review Verification for exact service states.</sys:String>
-    <sys:String x:Key="UpdateDetailDisabled">Automatic Updates is disabled by local policy. Review Verification to confirm how much manual update access remains.</sys:String>
+    <sys:String x:Key="UpdateDetailHardened">Automatic Updates is disabled by policy and core update services are hardened where Windows allows it. Review service states for exact details.</sys:String>
+    <sys:String x:Key="UpdateDetailDisabled">Automatic Updates is disabled by local policy. Review service states to confirm how much manual update access remains.</sys:String>
     <sys:String x:Key="UpdateDetailEnabled">Automatic Updates is enabled. Windows Update services are allowed to run normally.</sys:String>
     <sys:String x:Key="PolicyDisabledAndBlocked">Automatic Updates disabled and Windows Update access blocked</sys:String>
     <sys:String x:Key="PolicyAutoDisabled">Automatic Updates disabled</sys:String>

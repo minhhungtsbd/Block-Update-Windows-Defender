@@ -7,16 +7,18 @@
     <sys:String x:Key="LabelPublicIp">IP:</sys:String>
     <sys:String x:Key="PublicIpUnknown">Chưa có</sys:String>
     <sys:String x:Key="PublicIpFormat">IP: {0}</sys:String>
+    <sys:String x:Key="HeaderUserUnknown">Kh&#244;ng r&#245;</sys:String>
+    <sys:String x:Key="HeaderConnectionInfoFormat">IP: {0}   |   User: {1}   |   Port RDP: {2}</sys:String>
     <sys:String x:Key="ButtonLanguageVietnamese">Tiếng Việt</sys:String>
     <sys:String x:Key="ButtonLanguageEnglish">English</sys:String>
     <sys:String x:Key="LabelStatus">Trạng thái</sys:String>
 
-    <sys:String x:Key="TabControl">Điều khiển</sys:String>
+    <sys:String x:Key="TabControl">Update &amp; Defender</sys:String>
     <sys:String x:Key="TabBrowserInstall">Cài trình duyệt</sys:String>
-    <sys:String x:Key="TabVerification">Kiểm tra</sys:String>
-    <sys:String x:Key="TabTimeZone">M&#250;i gi&#7901;</sys:String>
-    <sys:String x:Key="TabSoftwareUpdate">Cập nhật</sys:String>
-    <sys:String x:Key="TabActivityLog">Nhật ký</sys:String>
+    <sys:String x:Key="TabAccessTools">Truy cập &amp; bảo mật</sys:String>
+    <sys:String x:Key="TabTimeZone">Đồng bộ thời gian</sys:String>
+    <sys:String x:Key="TabSoftwareUpdate">Cập nhật phần mềm</sys:String>
+    <sys:String x:Key="TabActivityLog">Nhật ký hệ thống</sys:String>
 
     <sys:String x:Key="SectionSystem">Hệ thống</sys:String>
     <sys:String x:Key="LabelComputerName">Tên máy</sys:String>
@@ -58,11 +60,41 @@
     <sys:String x:Key="VerificationFooter">Hardening theo best-effort: Windows v&#7851;n c&#243; th&#7875; b&#7843;o v&#7879; ho&#7863;c kh&#244;i ph&#7909;c m&#7897;t s&#7889; th&#224;nh ph&#7847;n update v&#224; Defender t&#249;y theo OS v&#224; c&#417; ch&#7871; b&#7843;o v&#7879; service.</sys:String>
 
     <sys:String x:Key="SectionTimeAndTimeZone">Th&#7901;i gian &amp; M&#250;i gi&#7901;</sys:String>
-    <sys:String x:Key="CheckboxAutoSyncTimeOnStartup">Tự động cập nhật khi mở app</sys:String>
+    <sys:String x:Key="CheckboxAutoSyncTimeOnStartup">Tự động cập nhật time &amp; time zone khi mở app</sys:String>
+    <sys:String x:Key="CheckboxAutoDetectTimeZoneFromIp">Tự động lấy time &amp; time zone từ IP</sys:String>
+    <sys:String x:Key="CheckboxManualUpdateTimeAndTimeZone">Manual update time &amp; time zone</sys:String>
+    <sys:String x:Key="LabelManualTimeZoneSelection">Múi giờ thủ công</sys:String>
     <sys:String x:Key="CheckboxRunAtWindowsStartup">Chạy cùng Windows</sys:String>
     <sys:String x:Key="LabelCurrentLocalTime">Thời gian local hiện tại</sys:String>
     <sys:String x:Key="LabelLastSyncResult">Kết quả đồng bộ gần nhất</sys:String>
     <sys:String x:Key="ButtonUpdateTimeNow">Đồng bộ ngay</sys:String>
+
+    <sys:String x:Key="SectionAccessTools">Công cụ truy cập &amp; bảo mật</sys:String>
+    <sys:String x:Key="SectionPasswordChange">Đổi mật khẩu Windows</sys:String>
+    <sys:String x:Key="PasswordChangeHint">Lưu ý: hãy copy và lưu mật khẩu mới ra ngoài trước khi đổi.</sys:String>
+    <sys:String x:Key="LabelNewPassword">Mật khẩu mới</sys:String>
+    <sys:String x:Key="LabelConfirmPassword">Xác nhận mật khẩu</sys:String>
+    <sys:String x:Key="CheckboxPasswordCopied">Tôi đã copy và lưu mật khẩu mới.</sys:String>
+    <sys:String x:Key="ButtonChangePassword">Đổi mật khẩu Windows</sys:String>
+    <sys:String x:Key="SectionRdpPort">Port RDP</sys:String>
+    <sys:String x:Key="RdpPortHint">Đổi port TCP trong khoảng 1024-65535. App sẽ khởi động lại dịch vụ Remote Desktop để áp dụng mà không cần reboot VPS.</sys:String>
+    <sys:String x:Key="LabelNewRdpPort">Port RDP mới</sys:String>
+    <sys:String x:Key="ButtonChangeRdpPort">Đổi port RDP</sys:String>
+    <sys:String x:Key="SectionDiskTools">Mở rộng ổ đĩa</sys:String>
+    <sys:String x:Key="DiskExtendHint">Mở rộng volume C: bằng vùng trống chưa cấp phát.</sys:String>
+    <sys:String x:Key="CheckboxAutoExtendSystemDriveOnStartup">Tự động mở rộng ổ C khi mở app</sys:String>
+    <sys:String x:Key="ButtonExtendSystemDriveNow">Mở rộng ổ C ngay</sys:String>
+    <sys:String x:Key="DiskExtendNotRunYet">Chưa chạy</sys:String>
+    <sys:String x:Key="DiskExtendNoSpaceStatus">Không còn dung lượng trống để mở rộng ổ C</sys:String>
+    <sys:String x:Key="SectionRdpHistory">Lịch sử IP đăng nhập RDP (30 ngày)</sys:String>
+    <sys:String x:Key="ButtonRefreshRdpHistory">Tải lịch sử RDP</sys:String>
+    <sys:String x:Key="RdpHistoryNotLoaded">Chưa tải lịch sử RDP.</sys:String>
+    <sys:String x:Key="RdpHistorySummaryFormat">Tìm thấy {0} bản ghi. Nguồn: {1}</sys:String>
+    <sys:String x:Key="RdpHistoryErrorFormat">Không thể tải lịch sử RDP: {0}</sys:String>
+    <sys:String x:Key="RdpColumnTime">Thời gian</sys:String>
+    <sys:String x:Key="RdpColumnUser">Tài khoản</sys:String>
+    <sys:String x:Key="RdpColumnIp">Địa chỉ IP</sys:String>
+    <sys:String x:Key="RdpColumnHost">Workstation</sys:String>
 
     <sys:String x:Key="SectionActivityLog">Nhật ký hoạt động</sys:String>
     <sys:String x:Key="ButtonOpenLogFolder">Mở thư mục log</sys:String>
@@ -71,8 +103,13 @@
     <sys:String x:Key="LabelUpdateStatus">Trạng thái cập nhật</sys:String>
     <sys:String x:Key="CheckboxAutoUpdateAppOnStartup">Tự động cập nhật phần mềm khi khởi động</sys:String>
     <sys:String x:Key="ButtonCheckAndUpdateNow">Kiểm tra &amp; Cập nhật ngay</sys:String>
+    <sys:String x:Key="SoftwareUpdateOpenSourceLabel">Dự án mã nguồn mở</sys:String>
+    <sys:String x:Key="SoftwareUpdateOpenSourceDescription">Kho lưu trữ GitHub:</sys:String>
 
     <sys:String x:Key="StatusReady">Sẵn sàng</sys:String>
+    <sys:String x:Key="StatusCompleted">Hoàn tất</sys:String>
+    <sys:String x:Key="StatusFailed">Thất bại</sys:String>
+    <sys:String x:Key="StatusWarning">Cảnh báo</sys:String>
     <sys:String x:Key="StatusDetecting">Đang nhận diện...</sys:String>
     <sys:String x:Key="MessageNoSyncYet">Chưa đồng bộ.</sys:String>
     <sys:String x:Key="DetailCheckingWindowsUpdate">Đang kiểm tra trạng thái Windows Update.</sys:String>
@@ -91,10 +128,16 @@
     <sys:String x:Key="BusyAutoTimeSyncBackground">Tự động đồng bộ thời gian ở nền...</sys:String>
     <sys:String x:Key="BusySwitchingLanguage">Đang chuyển ngôn ngữ...</sys:String>
     <sys:String x:Key="BusyCheckingAppUpdate">Đang kiểm tra cập nhật phần mềm...</sys:String>
+    <sys:String x:Key="BusyChangingPassword">Đang đổi mật khẩu Windows...</sys:String>
+    <sys:String x:Key="BusyChangingRdpPort">Đang đổi port RDP...</sys:String>
+    <sys:String x:Key="BusyExtendingSystemDrive">Đang mở rộng ổ C...</sys:String>
+    <sys:String x:Key="BusyLoadingRdpHistory">Đang tải lịch sử RDP...</sys:String>
 
     <sys:String x:Key="LogApplicationStarted">Ứng dụng đã khởi động.</sys:String>
     <sys:String x:Key="LogAutoSyncEnabled">Đã bật tự động đồng bộ khi khởi động app.</sys:String>
     <sys:String x:Key="LogAutoSyncDisabled">Đã tắt tự động đồng bộ khi khởi động app.</sys:String>
+    <sys:String x:Key="LogAutoExtendEnabled">Đã bật tự động mở rộng ổ C khi khởi động app.</sys:String>
+    <sys:String x:Key="LogAutoExtendDisabled">Đã tắt tự động mở rộng ổ C khi khởi động app.</sys:String>
     <sys:String x:Key="LogRunAtStartupEnabled">Đã bật chạy cùng Windows.</sys:String>
     <sys:String x:Key="LogRunAtStartupDisabled">Đã tắt chạy cùng Windows.</sys:String>
     <sys:String x:Key="LogSystemInfoRefreshed">Đã làm mới thông tin hệ thống.</sys:String>
@@ -120,6 +163,22 @@
     <sys:String x:Key="LogUpdateApplied">Đã tải bản cập nhật. Ứng dụng sẽ khởi động lại để áp dụng phiên bản mới.</sys:String>
     <sys:String x:Key="LogUpdateApplyFailedFormat">Cập nhật thất bại: {0}</sys:String>
     <sys:String x:Key="LogUpdateCheckFailedFormat">Không thể kiểm tra cập nhật: {0}</sys:String>
+    <sys:String x:Key="LogPasswordConfirmRequired">Chưa thực hiện: bạn cần xác nhận đã copy mật khẩu mới.</sys:String>
+    <sys:String x:Key="LogPasswordRequired">Chưa thực hiện: trường mật khẩu không được để trống.</sys:String>
+    <sys:String x:Key="LogPasswordTooShort">Chưa thực hiện: mật khẩu phải từ 8 ký tự.</sys:String>
+    <sys:String x:Key="LogPasswordMismatch">Chưa thực hiện: mật khẩu xác nhận không khớp.</sys:String>
+    <sys:String x:Key="LogPasswordChanged">Đã đổi mật khẩu Windows thành công.</sys:String>
+    <sys:String x:Key="LogPasswordChangeFailedFormat">Không thể đổi mật khẩu Windows: {0}</sys:String>
+    <sys:String x:Key="LogRdpPortInvalid">Port RDP không hợp lệ. Hãy dùng số từ 1024 đến 65535.</sys:String>
+    <sys:String x:Key="LogRdpPortChangedFormat">Đã đổi port RDP sang {0}. Dịch vụ RDP đã được khởi động lại. Phiên hiện tại có thể ngắt ngắn; hãy kết nối lại bằng port mới.</sys:String>
+    <sys:String x:Key="LogRdpPortChangeFailedFormat">Không thể đổi port RDP: {0}</sys:String>
+    <sys:String x:Key="LogDiskExtendSuccess">Đã mở rộng ổ C thành công.</sys:String>
+    <sys:String x:Key="LogDiskExtendFailedFormat">Không thể mở rộng ổ C: {0}</sys:String>
+    <sys:String x:Key="LogAutoExtendStarted">Đã bắt đầu tự động mở rộng ổ C ở nền.</sys:String>
+    <sys:String x:Key="LogAutoExtendCompleted">Tự động mở rộng ổ C đã hoàn tất.</sys:String>
+    <sys:String x:Key="LogAutoExtendFailedFormat">Tự động mở rộng ổ C thất bại: {0}</sys:String>
+    <sys:String x:Key="LogRdpHistoryLoadedFormat">Đã tải lịch sử RDP: {0} bản ghi từ {1}.</sys:String>
+    <sys:String x:Key="LogRdpHistoryFailedFormat">Không thể tải lịch sử RDP: {0}</sys:String>
 
     <sys:String x:Key="BrowserStatusNoSelection">Chưa chọn trình duyệt</sys:String>
     <sys:String x:Key="BrowserStatusRunning">Đang thực hiện...</sys:String>
@@ -128,8 +187,8 @@
     <sys:String x:Key="UpdateStatusEnabled">Đã bật</sys:String>
     <sys:String x:Key="UpdateStatusDisabled">Đã tắt</sys:String>
     <sys:String x:Key="UpdateStatusDisabledHardened">Đã tắt (Hardened)</sys:String>
-    <sys:String x:Key="UpdateDetailHardened">Automatic Updates đã bị tắt bằng policy và các service update cốt lõi đã được harden trong phạm vi Windows cho phép. Xem tab Kiểm tra để biết trạng thái chi tiết.</sys:String>
-    <sys:String x:Key="UpdateDetailDisabled">Automatic Updates đã bị tắt bằng local policy. Xem tab Kiểm tra để xác nhận mức độ còn cho phép update thủ công.</sys:String>
+    <sys:String x:Key="UpdateDetailHardened">Automatic Updates đã bị tắt bằng policy và các service update cốt lõi đã được harden trong phạm vi Windows cho phép. Xem trạng thái service để biết chi tiết.</sys:String>
+    <sys:String x:Key="UpdateDetailDisabled">Automatic Updates đã bị tắt bằng local policy. Xem trạng thái service để xác nhận mức độ còn cho phép update thủ công.</sys:String>
     <sys:String x:Key="UpdateDetailEnabled">Automatic Updates đang bật. Các service Windows Update được phép chạy bình thường.</sys:String>
     <sys:String x:Key="PolicyDisabledAndBlocked">Automatic Updates đã tắt và quyền truy cập Windows Update đã bị chặn</sys:String>
     <sys:String x:Key="PolicyAutoDisabled">Automatic Updates đã tắt</sys:String>

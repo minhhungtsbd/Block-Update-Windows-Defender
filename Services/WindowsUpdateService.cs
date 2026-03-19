@@ -37,9 +37,9 @@ namespace BlockUpdateWindowsDefender.Services
                     IsEnabled = !disabledByPolicy,
                     StatusText = hardenedOff ? "Disabled (Hardened)" : (disabledByPolicy ? "Disabled" : "Enabled"),
                     DetailText = hardenedOff
-                        ? "Automatic Updates is disabled by policy and core update services are hardened where Windows allows it. Review Verification for exact service states."
+                        ? "Automatic Updates is disabled by policy and core update services are hardened where Windows allows it. Review service states for exact details."
                         : (disabledByPolicy
-                            ? "Automatic Updates is disabled by local policy. Review Verification to confirm how much manual update access remains."
+                            ? "Automatic Updates is disabled by local policy. Review service states to confirm how much manual update access remains."
                             : "Automatic Updates is enabled. Windows Update services are allowed to run normally."),
                     ServiceState = wuauservInfo.DisplayText,
                     PolicyStateText = GetPolicyStateText(disabledByPolicy, updateAccessBlocked),

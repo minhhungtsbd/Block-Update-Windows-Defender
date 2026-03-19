@@ -164,6 +164,107 @@
             <Setter Property="Margin" Value="0" />
         </Style>
 
+        <Style x:Key="ManualTimeZoneComboBoxItemStyle" TargetType="ComboBoxItem">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="{StaticResource PanelAltBrush}" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBoxItem">
+                        <Border x:Name="ItemBorder"
+                                Background="{TemplateBinding Background}"
+                                Padding="{TemplateBinding Padding}">
+                            <ContentPresenter />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsHighlighted" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#0D3C63" />
+                            </Trigger>
+                            <Trigger Property="IsSelected" Value="True">
+                                <Setter TargetName="ItemBorder" Property="Background" Value="#0D3C63" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="ManualTimeZoneComboBoxStyle" TargetType="ComboBox">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="#0B1220" />
+            <Setter Property="BorderBrush" Value="{StaticResource LightBorderBrush}" />
+            <Setter Property="BorderThickness" Value="1" />
+            <Setter Property="FontSize" Value="13" />
+            <Setter Property="Padding" Value="8,4" />
+            <Setter Property="MaxDropDownHeight" Value="280" />
+            <Setter Property="ItemContainerStyle" Value="{StaticResource ManualTimeZoneComboBoxItemStyle}" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="ComboBox">
+                        <Grid>
+                            <Border x:Name="MainBorder"
+                                    Background="{TemplateBinding Background}"
+                                    BorderBrush="{TemplateBinding BorderBrush}"
+                                    BorderThickness="{TemplateBinding BorderThickness}"
+                                    CornerRadius="6">
+                                <Grid>
+                                    <ContentPresenter Margin="10,0,34,0"
+                                                      VerticalAlignment="Center"
+                                                      HorizontalAlignment="Left"
+                                                      Content="{TemplateBinding SelectionBoxItem}" />
+                                    <ToggleButton Width="26"
+                                                  HorizontalAlignment="Right"
+                                                  Background="Transparent"
+                                                  BorderThickness="0"
+                                                  Focusable="False"
+                                                  IsChecked="{Binding IsDropDownOpen, RelativeSource={RelativeSource TemplatedParent}, Mode=TwoWay}"
+                                                  ClickMode="Press">
+                                        <Path Data="M 0 0 L 8 0 L 4 5 Z"
+                                              Fill="{StaticResource MutedBrush}"
+                                              Width="8"
+                                              Height="5"
+                                              HorizontalAlignment="Center"
+                                              VerticalAlignment="Center" />
+                                    </ToggleButton>
+                                </Grid>
+                            </Border>
+
+                            <Popup x:Name="PART_Popup"
+                                   Placement="Bottom"
+                                   IsOpen="{TemplateBinding IsDropDownOpen}"
+                                   AllowsTransparency="True"
+                                   Focusable="False"
+                                   PopupAnimation="Fade">
+                                <Border Background="#0B1220"
+                                        BorderBrush="{StaticResource LightBorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="6"
+                                        MinWidth="{Binding ActualWidth, ElementName=MainBorder}">
+                                    <ScrollViewer VerticalScrollBarVisibility="Auto"
+                                                  CanContentScroll="True">
+                                        <StackPanel IsItemsHost="True"
+                                                    KeyboardNavigation.DirectionalNavigation="Contained" />
+                                    </ScrollViewer>
+                                </Border>
+                            </Popup>
+                        </Grid>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsKeyboardFocusWithin" Value="True">
+                                <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="MainBorder" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                            </Trigger>
+                            <Trigger Property="IsEnabled" Value="False">
+                                <Setter Property="Opacity" Value="0.6" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
         <Style TargetType="TabControl">
             <Setter Property="Background" Value="Transparent" />
             <Setter Property="BorderThickness" Value="0" />
@@ -300,6 +401,66 @@
                 </Setter.Value>
             </Setter>
         </Style>
+
+        <Style x:Key="RdpGridViewHeaderStyle" TargetType="GridViewColumnHeader">
+            <Setter Property="Background" Value="#111827" />
+            <Setter Property="Foreground" Value="#C7D2E0" />
+            <Setter Property="BorderBrush" Value="#334155" />
+            <Setter Property="BorderThickness" Value="0,0,1,1" />
+            <Setter Property="Padding" Value="10,6" />
+            <Setter Property="FontSize" Value="12" />
+            <Setter Property="FontWeight" Value="SemiBold" />
+            <Setter Property="HorizontalContentAlignment" Value="Left" />
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="GridViewColumnHeader">
+                        <Border x:Name="HeaderBorder"
+                                Background="{TemplateBinding Background}"
+                                BorderBrush="{TemplateBinding BorderBrush}"
+                                BorderThickness="{TemplateBinding BorderThickness}">
+                            <ContentPresenter Margin="{TemplateBinding Padding}"
+                                              VerticalAlignment="Center"
+                                              HorizontalAlignment="{TemplateBinding HorizontalContentAlignment}" />
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter TargetName="HeaderBorder" Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                            <Trigger Property="IsPressed" Value="True">
+                                <Setter TargetName="HeaderBorder" Property="Background" Value="#0D3C63" />
+                                <Setter Property="Foreground" Value="White" />
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+
+        <Style x:Key="RdpListViewItemStyle" TargetType="ListViewItem">
+            <Setter Property="Foreground" Value="White" />
+            <Setter Property="Background" Value="Transparent" />
+            <Setter Property="BorderBrush" Value="Transparent" />
+            <Setter Property="BorderThickness" Value="0,0,0,1" />
+            <Setter Property="Padding" Value="0" />
+            <Setter Property="FocusVisualStyle" Value="{x:Null}" />
+            <Setter Property="HorizontalContentAlignment" Value="Stretch" />
+            <Setter Property="VerticalContentAlignment" Value="Center" />
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#10243A" />
+                    <Setter Property="BorderBrush" Value="#1E3A5F" />
+                </Trigger>
+                <Trigger Property="IsSelected" Value="True">
+                    <Setter Property="Background" Value="#0D3C63" />
+                    <Setter Property="BorderBrush" Value="{StaticResource AccentBrush}" />
+                    <Setter Property="Foreground" Value="White" />
+                </Trigger>
+                <Trigger Property="IsEnabled" Value="False">
+                    <Setter Property="Opacity" Value="0.6" />
+                </Trigger>
+            </Style.Triggers>
+        </Style>
     </Window.Resources>
 
     <Grid Margin="22">
@@ -318,7 +479,7 @@
                 <StackPanel>
                     <TextBlock Text="Windows VPS Control Center" Foreground="White" FontSize="26" FontWeight="Bold" />
                     <TextBlock Text="Manage updates, security, time sync, and browser installation" Foreground="{StaticResource MutedBrush}" Margin="0,5,0,0" FontSize="13" />
-                    <TextBlock Text="{Binding PublicIpDisplayText}"
+                    <TextBlock Text="{Binding ConnectionInfoDisplayText}"
                                Foreground="{StaticResource MutedBrush}"
                                Margin="0,6,0,0"
                                FontSize="12" />
@@ -506,6 +667,7 @@
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
+                                <RowDefinition Height="*" />
                                 <RowDefinition Height="Auto" />
                             </Grid.RowDefinitions>
 
@@ -594,7 +756,7 @@
                                           Margin="12,0,0,0" />
                             </Grid>
 
-                            <Border Grid.Row="5" Style="{StaticResource ActionBarBorderStyle}">
+                            <Border Grid.Row="6" Style="{StaticResource ActionBarBorderStyle}" Margin="0,16,0,0">
                                 <WrapPanel HorizontalAlignment="Left">
                                     <Button Content="{DynamicResource ButtonInstallSelectedBrowsers}"
                                             Style="{StaticResource BrowserInstallActionButtonStyle}"
@@ -606,192 +768,218 @@
                 </Grid>
             </TabItem>
 
-            <TabItem Header="{DynamicResource TabVerification}">
-                <Grid Margin="0,16,0,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="Auto" />
-                        <RowDefinition Height="*" />
-                        <RowDefinition Height="Auto" />
-                    </Grid.RowDefinitions>
+            <TabItem Header="{DynamicResource TabAccessTools}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto"
+                              HorizontalScrollBarVisibility="Disabled"
+                              CanContentScroll="False">
+                    <Grid Margin="0,16,0,0">
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                            <RowDefinition Height="Auto" />
+                        </Grid.RowDefinitions>
 
                     <Border Style="{StaticResource PanelBorderStyle}" Margin="0,0,0,14">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*" />
+                                <ColumnDefinition Width="*" />
+                            </Grid.ColumnDefinitions>
+
+                            <Grid Grid.ColumnSpan="2" Margin="0,0,0,14">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <TextBlock Text="{DynamicResource SectionAccessTools}" Style="{StaticResource SectionTitleStyle}" />
+                                <TextBlock Grid.Column="1"
+                                           Text="{Binding SecurityStatusText}"
+                                           Style="{StaticResource ValueStyle}"
+                                           Foreground="{Binding SecurityStatusText, Converter={StaticResource StatusBrushConverter}}" />
+                            </Grid>
+
+                            <Border Grid.Row="1"
+                                    Grid.Column="0"
+                                    Background="{StaticResource PanelAltBrush}"
+                                    BorderBrush="{StaticResource PanelBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="12"
+                                    Padding="14"
+                                    Margin="0,0,8,0">
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource SectionPasswordChange}" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                    <TextBlock Text="{DynamicResource PasswordChangeHint}"
+                                               Style="{StaticResource DetailTextStyle}"
+                                               Margin="0,8,0,12" />
+
+                                    <TextBlock Text="{DynamicResource LabelNewPassword}" Style="{StaticResource LabelStyle}" />
+                                    <PasswordBox x:Name="NewPasswordBox"
+                                                 PasswordChanged="NewPasswordBox_OnPasswordChanged"
+                                                 FontSize="14"
+                                                 Margin="0,0,0,10"
+                                                 Background="#0B1220"
+                                                 BorderBrush="{StaticResource LightBorderBrush}"
+                                                 Foreground="White"
+                                                 Padding="8" />
+
+                                    <TextBlock Text="{DynamicResource LabelConfirmPassword}" Style="{StaticResource LabelStyle}" />
+                                    <PasswordBox x:Name="ConfirmPasswordBox"
+                                                 PasswordChanged="ConfirmPasswordBox_OnPasswordChanged"
+                                                 FontSize="14"
+                                                 Margin="0,0,0,10"
+                                                 Background="#0B1220"
+                                                 BorderBrush="{StaticResource LightBorderBrush}"
+                                                 Foreground="White"
+                                                 Padding="8" />
+
+                                    <CheckBox Content="{DynamicResource CheckboxPasswordCopied}"
+                                              IsChecked="{Binding PasswordChangeConfirmed, Mode=TwoWay}"
+                                              Margin="0,0,0,12" />
+
+                                    <Button Content="{DynamicResource ButtonChangePassword}"
+                                            Style="{StaticResource DangerButtonStyle}"
+                                            Command="{Binding ChangeWindowsPasswordCommand}"
+                                            HorizontalAlignment="Left"
+                                            MinWidth="190" />
+                                </StackPanel>
+                            </Border>
+
+                            <Border Grid.Row="1"
+                                    Grid.Column="1"
+                                    Background="{StaticResource PanelAltBrush}"
+                                    BorderBrush="{StaticResource PanelBorderBrush}"
+                                    BorderThickness="1"
+                                    CornerRadius="12"
+                                    Padding="14"
+                                    Margin="8,0,0,0">
+                                <Grid>
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="Auto" />
+                                        <RowDefinition Height="*" />
+                                        <RowDefinition Height="Auto" />
+                                    </Grid.RowDefinitions>
+
+                                    <TextBlock Text="{DynamicResource SectionRdpPort}" Style="{StaticResource SectionTitleStyle}" FontSize="14" />
+                                    <TextBlock Grid.Row="1"
+                                               Text="{DynamicResource RdpPortHint}"
+                                               Style="{StaticResource DetailTextStyle}"
+                                               Margin="0,8,0,12" />
+
+                                    <StackPanel Grid.Row="2">
+                                        <TextBlock Text="{DynamicResource LabelNewRdpPort}" Style="{StaticResource LabelStyle}" />
+                                        <TextBox Text="{Binding NewRdpPortText, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                                 FontSize="14"
+                                                 HorizontalAlignment="Stretch"
+                                                 Margin="0,0,0,12"
+                                                 Background="#0B1220"
+                                                 BorderBrush="{StaticResource LightBorderBrush}"
+                                                 Foreground="White"
+                                                 TextAlignment="Left"
+                                                 HorizontalContentAlignment="Left"
+                                                 Padding="8" />
+                                    </StackPanel>
+
+                                    <Button Grid.Row="4"
+                                            Content="{DynamicResource ButtonChangeRdpPort}"
+                                            Style="{StaticResource PrimaryButtonStyle}"
+                                            Command="{Binding ChangeRdpPortCommand}"
+                                            HorizontalAlignment="Left"
+                                            MinWidth="190" />
+                                </Grid>
+                            </Border>
+                        </Grid>
+                    </Border>
+
+                    <Border Grid.Row="1" Style="{StaticResource PanelBorderStyle}" Margin="0,0,0,14">
                         <Grid>
                             <Grid.ColumnDefinitions>
                                 <ColumnDefinition Width="*" />
                                 <ColumnDefinition Width="Auto" />
                             </Grid.ColumnDefinitions>
-
                             <StackPanel>
-                                <TextBlock Text="{DynamicResource SectionVerification}" Style="{StaticResource SectionTitleStyle}" />
-                                <TextBlock Text="{DynamicResource VerificationSubtitle}"
+                                <TextBlock Text="{DynamicResource SectionDiskTools}" Style="{StaticResource SectionTitleStyle}" />
+                                <TextBlock Text="{DynamicResource DiskExtendHint}"
                                            Style="{StaticResource DetailTextStyle}"
-                                           Margin="0,8,0,0" />
+                                           Margin="0,8,0,10" />
+                                <CheckBox Content="{DynamicResource CheckboxAutoExtendSystemDriveOnStartup}"
+                                          IsChecked="{Binding AutoExtendSystemDriveOnStartup, Mode=TwoWay}"
+                                          Margin="0,0,0,10" />
+                                <TextBlock Text="{Binding DiskExtendStatusText}"
+                                           Style="{StaticResource ValueStyle}"
+                                           Foreground="{Binding DiskExtendStatusText, Converter={StaticResource StatusBrushConverter}}" />
                             </StackPanel>
-
                             <Button Grid.Column="1"
-                                    Content="{DynamicResource ButtonRefreshVerification}"
+                                    Content="{DynamicResource ButtonExtendSystemDriveNow}"
                                     Style="{StaticResource SecondaryButtonStyle}"
-                                    Command="{Binding RefreshCommand}" />
+                                    Command="{Binding ExtendSystemDriveCommand}"
+                                    MinWidth="190"
+                                    Margin="12,0,0,0" />
                         </Grid>
                     </Border>
 
-                    <Border Grid.Row="1" Style="{StaticResource PanelBorderStyle}" Margin="0" Padding="0">
-                        <ScrollViewer VerticalScrollBarVisibility="Auto"
-                                      HorizontalScrollBarVisibility="Disabled"
-                                      Padding="16">
-                            <StackPanel>
-                                <Border Style="{StaticResource VerificationRowBorderStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="170" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{DynamicResource VerificationPolicyState}" Style="{StaticResource VerificationLabelStyle}" />
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{Binding WindowsUpdatePolicyStateText}"
-                                                   Style="{StaticResource VerificationValueStyle}"
-                                                   Foreground="{Binding WindowsUpdatePolicyStateText, Converter={StaticResource StatusBrushConverter}}"
-                                                   Margin="10,0,0,0"
-                                                   VerticalAlignment="Center" />
-                                    </Grid>
-                                </Border>
+                    <Border Grid.Row="2" Style="{StaticResource PanelBorderStyle}" Margin="0">
+                        <DockPanel>
+                            <Grid DockPanel.Dock="Top" Margin="0,0,0,12">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+                                <StackPanel>
+                                    <TextBlock Text="{DynamicResource SectionRdpHistory}" Style="{StaticResource SectionTitleStyle}" />
+                                    <TextBlock Text="{Binding RdpHistorySummaryText}"
+                                               Style="{StaticResource DetailTextStyle}"
+                                               Margin="0,6,0,0" />
+                                </StackPanel>
+                                <Button Grid.Column="1"
+                                        Content="{DynamicResource ButtonRefreshRdpHistory}"
+                                        Style="{StaticResource SecondaryButtonStyle}"
+                                        Command="{Binding RefreshRdpHistoryCommand}"
+                                        Margin="12,0,0,0"
+                                        VerticalAlignment="Top" />
+                            </Grid>
 
-                                <Border Style="{StaticResource VerificationRowBorderStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="170" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{DynamicResource VerificationManualUpdate}" Style="{StaticResource VerificationLabelStyle}" />
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{Binding WindowsUpdateManualCapabilityText}"
-                                                   Style="{StaticResource VerificationValueStyle}"
-                                                   Foreground="{Binding WindowsUpdateManualCapabilityText, Converter={StaticResource StatusBrushConverter}}"
-                                                   Margin="10,0,0,0"
-                                                   VerticalAlignment="Center" />
-                                    </Grid>
-                                </Border>
-
-                                <Border Style="{StaticResource VerificationRowBorderStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="170" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{DynamicResource VerificationWuauserv}" Style="{StaticResource VerificationLabelStyle}" />
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{Binding WindowsUpdateWuauservStateText}"
-                                                   Style="{StaticResource VerificationValueStyle}"
-                                                   Foreground="{Binding WindowsUpdateWuauservStateText, Converter={StaticResource StatusBrushConverter}}"
-                                                   Margin="10,0,0,0"
-                                                   VerticalAlignment="Center" />
-                                    </Grid>
-                                </Border>
-
-                                <Border Style="{StaticResource VerificationRowBorderStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="170" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{DynamicResource VerificationUsoSvc}" Style="{StaticResource VerificationLabelStyle}" />
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{Binding WindowsUpdateUsoSvcStateText}"
-                                                   Style="{StaticResource VerificationValueStyle}"
-                                                   Foreground="{Binding WindowsUpdateUsoSvcStateText, Converter={StaticResource StatusBrushConverter}}"
-                                                   Margin="10,0,0,0"
-                                                   VerticalAlignment="Center" />
-                                    </Grid>
-                                </Border>
-
-                                <Border Style="{StaticResource VerificationRowBorderStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="170" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{DynamicResource VerificationWaaSMedicSvc}" Style="{StaticResource VerificationLabelStyle}" />
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{Binding WindowsUpdateWaaSMedicSvcStateText}"
-                                                   Style="{StaticResource VerificationValueStyle}"
-                                                   Foreground="{Binding WindowsUpdateWaaSMedicSvcStateText, Converter={StaticResource StatusBrushConverter}}"
-                                                   Margin="10,0,0,0"
-                                                   VerticalAlignment="Center" />
-                                    </Grid>
-                                </Border>
-
-                                <Border Style="{StaticResource VerificationRowBorderStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="170" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{DynamicResource VerificationDefenderStatus}" Style="{StaticResource VerificationLabelStyle}" />
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{Binding DefenderVerificationStatusText}"
-                                                   Style="{StaticResource VerificationValueStyle}"
-                                                   Foreground="{Binding DefenderVerificationStatusText, Converter={StaticResource StatusBrushConverter}}"
-                                                   Margin="10,0,0,0"
-                                                   VerticalAlignment="Center" />
-                                    </Grid>
-                                </Border>
-
-                                <Border Style="{StaticResource VerificationRowBorderStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="170" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{DynamicResource VerificationDefenderRealtime}" Style="{StaticResource VerificationLabelStyle}" />
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{Binding DefenderRealtimeProtectionText}"
-                                                   Style="{StaticResource VerificationValueStyle}"
-                                                   Foreground="{Binding DefenderRealtimeProtectionText, Converter={StaticResource StatusBrushConverter}}"
-                                                   Margin="10,0,0,0"
-                                                   VerticalAlignment="Center" />
-                                    </Grid>
-                                </Border>
-
-                                <Border Style="{StaticResource VerificationRowBorderStyle}">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="170" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{DynamicResource VerificationDefenderAntivirus}" Style="{StaticResource VerificationLabelStyle}" />
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{Binding DefenderAntivirusStateText}"
-                                                   Style="{StaticResource VerificationValueStyle}"
-                                                   Foreground="{Binding DefenderAntivirusStateText, Converter={StaticResource StatusBrushConverter}}"
-                                                   Margin="10,0,0,0"
-                                                   VerticalAlignment="Center" />
-                                    </Grid>
-                                </Border>
-
-                                <Border Style="{StaticResource VerificationRowBorderStyle}" Margin="0">
-                                    <Grid>
-                                        <Grid.ColumnDefinitions>
-                                            <ColumnDefinition Width="170" />
-                                            <ColumnDefinition Width="*" />
-                                        </Grid.ColumnDefinitions>
-                                        <TextBlock Text="{DynamicResource VerificationDefenderTamper}" Style="{StaticResource VerificationLabelStyle}" />
-                                        <TextBlock Grid.Column="1"
-                                                   Text="{Binding DefenderTamperProtectionText}"
-                                                   Style="{StaticResource VerificationValueStyle}"
-                                                   Foreground="{Binding DefenderTamperProtectionText, Converter={StaticResource StatusBrushConverter}}"
-                                                   Margin="10,0,0,0"
-                                                   VerticalAlignment="Center" />
-                                    </Grid>
-                                </Border>
-                            </StackPanel>
-                        </ScrollViewer>
+                            <ListView ItemsSource="{Binding RdpHistoryEntries}"
+                                      Background="#0B1220"
+                                      BorderBrush="#1F2937"
+                                      BorderThickness="1"
+                                      Foreground="White"
+                                      FontSize="12"
+                                      ItemContainerStyle="{StaticResource RdpListViewItemStyle}"
+                                      Height="220"
+                                      MinHeight="180">
+                                <ListView.Resources>
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightBrushKey}" Color="#0D3C63" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.HighlightTextBrushKey}" Color="White" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.ControlBrushKey}" Color="#0B1220" />
+                                    <SolidColorBrush x:Key="{x:Static SystemColors.WindowBrushKey}" Color="#0B1220" />
+                                </ListView.Resources>
+                                <ListView.View>
+                                    <GridView ColumnHeaderContainerStyle="{StaticResource RdpGridViewHeaderStyle}">
+                                        <GridViewColumn Header="{DynamicResource RdpColumnTime}"
+                                                        DisplayMemberBinding="{Binding Time}"
+                                                        Width="190" />
+                                        <GridViewColumn Header="{DynamicResource RdpColumnUser}"
+                                                        DisplayMemberBinding="{Binding User}"
+                                                        Width="170" />
+                                        <GridViewColumn Header="{DynamicResource RdpColumnIp}"
+                                                        DisplayMemberBinding="{Binding IpAddress}"
+                                                        Width="160" />
+                                        <GridViewColumn Header="{DynamicResource RdpColumnHost}"
+                                                        DisplayMemberBinding="{Binding Host}"
+                                                        Width="190" />
+                                    </GridView>
+                                </ListView.View>
+                            </ListView>
+                        </DockPanel>
                     </Border>
-
-                    <TextBlock Grid.Row="2"
-                               Text="{DynamicResource VerificationFooter}"
-                               Style="{StaticResource DetailTextStyle}"
-                               Margin="0,12,0,0" />
                 </Grid>
+                </ScrollViewer>
             </TabItem>
 
             <TabItem Header="{DynamicResource TabTimeZone}">
@@ -799,6 +987,8 @@
                     <Border Style="{StaticResource PanelBorderStyle}" Margin="0">
                         <Grid>
                             <Grid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
                                 <RowDefinition Height="Auto" />
@@ -815,13 +1005,34 @@
                                       Margin="0,16,0,10"
                                       FontSize="13" />
                             <CheckBox Grid.Row="2"
-                                      Content="{DynamicResource CheckboxRunAtWindowsStartup}"
+                                      Content="{DynamicResource CheckboxAutoDetectTimeZoneFromIp}"
                                       Foreground="White"
-                                      IsChecked="{Binding RunAtWindowsStartup, Mode=TwoWay}"
+                                      IsChecked="{Binding AutoDetectTimeZoneFromIp, Mode=TwoWay}"
+                                      Margin="0,0,0,10"
+                                      FontSize="13" />
+                            <CheckBox Grid.Row="3"
+                                      Content="{DynamicResource CheckboxManualUpdateTimeAndTimeZone}"
+                                      Foreground="White"
+                                      IsChecked="{Binding ManualUpdateTimeAndTimeZone, Mode=TwoWay}"
                                       Margin="0,0,0,18"
                                       FontSize="13" />
 
-                            <Grid Grid.Row="3" Margin="0,0,0,18">
+                            <StackPanel Grid.Row="4"
+                                        Margin="0,0,0,16"
+                                        Visibility="{Binding ManualUpdateTimeAndTimeZone, Converter={StaticResource BooleanToVisibilityConverter}}">
+                                <TextBlock Text="{DynamicResource LabelManualTimeZoneSelection}" Style="{StaticResource LabelStyle}" />
+                                <ComboBox ItemsSource="{Binding AvailableManualTimeZones}"
+                                          SelectedValuePath="Id"
+                                          DisplayMemberPath="DisplayName"
+                                          SelectedValue="{Binding SelectedManualTimeZoneId, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                                          Style="{StaticResource ManualTimeZoneComboBoxStyle}"
+                                          Margin="0,4,0,0"
+                                          MinWidth="360"
+                                          Height="32"
+                                          IsTextSearchEnabled="True" />
+                            </StackPanel>
+
+                            <Grid Grid.Row="5" Margin="0,0,0,18">
                                 <Grid.ColumnDefinitions>
                                     <ColumnDefinition Width="*" />
                                     <ColumnDefinition Width="*" />
@@ -838,7 +1049,7 @@
                                 </StackPanel>
                             </Grid>
 
-                            <StackPanel Grid.Row="4">
+                            <StackPanel Grid.Row="6">
                                 <TextBlock Text="{DynamicResource LabelLastSyncResult}" Style="{StaticResource LabelStyle}" />
                                 <Border Background="#0B1220" BorderBrush="#1F2937" BorderThickness="1" CornerRadius="12" Padding="14">
                                     <TextBlock Text="{Binding LastTimeSyncMessage}"
@@ -849,7 +1060,7 @@
                                     </Border>
                             </StackPanel>
 
-                            <Button Grid.Row="5"
+                            <Button Grid.Row="7"
                                     Content="{DynamicResource ButtonUpdateTimeNow}"
                                     Style="{StaticResource PrimaryButtonStyle}"
                                     Margin="0,14,0,0"
@@ -922,7 +1133,7 @@
                                         Margin="2,0,0,2"
                                         VerticalAlignment="Bottom"
                                         HorizontalAlignment="Left">
-                                <TextBlock Text="Open-source project"
+                                <TextBlock Text="{DynamicResource SoftwareUpdateOpenSourceLabel}"
                                            Foreground="{StaticResource MutedBrush}"
                                            FontSize="11"
                                            FontWeight="SemiBold" />
@@ -930,7 +1141,7 @@
                                            FontSize="11"
                                            Margin="0,4,0,0"
                                            TextWrapping="Wrap">
-                                    <Run Text="GitHub repository:" />
+                                    <Run Text="{DynamicResource SoftwareUpdateOpenSourceDescription}" />
                                     <Run Text=" " />
                                     <Hyperlink NavigateUri="https://github.com/minhhungtsbd/Block-Update-Windows-Defender"
                                                RequestNavigate="RepositoryLink_RequestNavigate">

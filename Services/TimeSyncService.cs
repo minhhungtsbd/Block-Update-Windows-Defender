@@ -17,7 +17,10 @@ namespace BlockUpdateWindowsDefender.Services
             _processRunner = processRunner;
         }
 
-        public async Task<TimeSyncResult> SyncAsync(string currentLanguageCode = null)
+        public async Task<TimeSyncResult> SyncAsync(
+            string currentLanguageCode = null,
+            bool autoDetectTimeZone = true,
+            string manualWindowsTimeZoneId = null)
         {
             var fallbackLanguageCode = NormalizeLanguageCode(currentLanguageCode);
             var timezoneMessage = IsVietnameseLanguage(fallbackLanguageCode)
@@ -34,6 +37,37 @@ namespace BlockUpdateWindowsDefender.Services
                     Message = string.IsNullOrWhiteSpace(resyncResult.StandardError)
                         ? resyncResult.StandardOutput.Trim()
                         : resyncResult.StandardError.Trim(),
+                    TimeZoneDisplayName = TimeZoneInfo.Local.DisplayName,
+                    LocalTime = DateTime.Now,
+                    SuggestedLanguageCode = fallbackLanguageCode
+                };
+            }
+
+            if (!autoDetectTimeZone)
+            {
+                string manualMessage;
+                if (!string.IsNullOrWhiteSpace(manualWindowsTimeZoneId))
+                {
+                    var setTimeZoneResult = await _processRunner.RunAsync("tzutil.exe", $"/s \"{manualWindowsTimeZoneId}\"");
+                    manualMessage = setTimeZoneResult.IsSuccess
+                        ? (IsVietnameseLanguage(fallbackLanguageCode)
+                            ? $"\u0110\u1ED3ng b\u1ED9 gi\u1EDD Windows th\u00E0nh c\u00F4ng. M\u00FAi gi\u1EDD th\u1EE7 c\u00F4ng \u0111\u00E3 \u0111\u01B0\u1EE3c c\u1EADp nh\u1EADt sang {manualWindowsTimeZoneId}."
+                            : $"Windows time synchronized successfully. Manual time zone updated to {manualWindowsTimeZoneId}.")
+                        : (IsVietnameseLanguage(fallbackLanguageCode)
+                            ? $"\u0110\u1ED3ng b\u1ED9 gi\u1EDD Windows th\u00E0nh c\u00F4ng nh\u01B0ng kh\u00F4ng th\u1EC3 c\u1EADp nh\u1EADt m\u00FAi gi\u1EDD th\u1EE7 c\u00F4ng ({manualWindowsTimeZoneId})."
+                            : $"Windows time synchronized successfully but could not apply manual time zone ({manualWindowsTimeZoneId}).");
+                }
+                else
+                {
+                    manualMessage = IsVietnameseLanguage(fallbackLanguageCode)
+                        ? "\u0110\u1ED3ng b\u1ED9 gi\u1EDD Windows th\u00E0nh c\u00F4ng. Ch\u1EBF \u0111\u1ED9 c\u1EADp nh\u1EADt th\u1EE7 c\u00F4ng \u0111ang b\u1EADt. M\u00FAi gi\u1EDD \u0111\u01B0\u1EE3c gi\u1EEF nguy\u00EAn."
+                        : "Windows time synchronized successfully. Manual update time & time zone mode is active. Time zone was left unchanged.";
+                }
+
+                return new TimeSyncResult
+                {
+                    Success = true,
+                    Message = manualMessage,
                     TimeZoneDisplayName = TimeZoneInfo.Local.DisplayName,
                     LocalTime = DateTime.Now,
                     SuggestedLanguageCode = fallbackLanguageCode

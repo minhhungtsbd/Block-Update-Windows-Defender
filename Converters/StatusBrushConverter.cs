@@ -57,7 +57,10 @@ namespace BlockUpdateWindowsDefender.Converters
                 "likely blocked",
                 "partially blocked",
                 "canh bao",
-                "bi chan"))
+                "bi chan",
+                "no unallocated space",
+                "khong con dung luong trong",
+                "khong du dung luong"))
             {
                 return WarningBrush;
             }
