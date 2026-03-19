@@ -43,15 +43,19 @@
     <sys:String x:Key="BrowserCentBrowser">CentBrowser</sys:String>
     <sys:String x:Key="ButtonInstallSelectedBrowsers">Install Selected Browsers</sys:String>
 
-    <sys:String x:Key="SectionVerification">Windows Update Verification</sys:String>
-    <sys:String x:Key="VerificationSubtitle">Read-back of the current machine state after policy/service changes.</sys:String>
+    <sys:String x:Key="SectionVerification">Windows Update &amp; Defender Verification</sys:String>
+    <sys:String x:Key="VerificationSubtitle">Read-back of the current machine state after update policy, services, and Defender changes.</sys:String>
     <sys:String x:Key="ButtonRefreshVerification">Refresh Verification</sys:String>
     <sys:String x:Key="VerificationPolicyState">Policy State</sys:String>
     <sys:String x:Key="VerificationManualUpdate">Manual Update</sys:String>
     <sys:String x:Key="VerificationWuauserv">wuauserv</sys:String>
     <sys:String x:Key="VerificationUsoSvc">UsoSvc</sys:String>
     <sys:String x:Key="VerificationWaaSMedicSvc">WaaSMedicSvc</sys:String>
-    <sys:String x:Key="VerificationFooter">Best-effort hardening: Windows may still protect or restore some update components depending on OS version and service protections.</sys:String>
+    <sys:String x:Key="VerificationDefenderStatus">Defender Status</sys:String>
+    <sys:String x:Key="VerificationDefenderRealtime">Realtime Protection</sys:String>
+    <sys:String x:Key="VerificationDefenderAntivirus">Antivirus Engine</sys:String>
+    <sys:String x:Key="VerificationDefenderTamper">Tamper Protection</sys:String>
+    <sys:String x:Key="VerificationFooter">Best-effort hardening: Windows may still protect or restore some update and Defender components depending on OS version and service protections.</sys:String>
 
     <sys:String x:Key="SectionTimeAndTimeZone">Time &amp; Time Zone</sys:String>
     <sys:String x:Key="CheckboxAutoSyncTimeOnStartup">Auto update on app startup</sys:String>

@@ -40,6 +40,10 @@ namespace BlockUpdateWindowsDefender.ViewModels
         private string _windowsUpdateManualCapabilityText;
         private string _defenderStatusText;
         private string _defenderDetailText;
+        private string _defenderVerificationStatusText;
+        private string _defenderRealtimeProtectionText;
+        private string _defenderAntivirusStateText;
+        private string _defenderTamperProtectionText;
         private string _browserInstallStatusText;
         private string _browserInstallProfileText;
         private bool _autoSyncTimeOnStartup;
@@ -103,6 +107,10 @@ namespace BlockUpdateWindowsDefender.ViewModels
             WindowsUpdateManualCapabilityText = T("StatusDetecting");
             DefenderStatusText = T("StatusDetecting");
             DefenderDetailText = T("DetailCheckingDefender");
+            DefenderVerificationStatusText = T("StatusDetecting");
+            DefenderRealtimeProtectionText = T("StatusDetecting");
+            DefenderAntivirusStateText = T("StatusDetecting");
+            DefenderTamperProtectionText = T("StatusDetecting");
             BrowserInstallStatusText = T("StatusReady");
             BrowserInstallProfileText = string.Format(T("BrowserProfileFormat"), T("StatusDetecting"));
             PublicIpDisplayText = string.Format(T("PublicIpFormat"), T("PublicIpUnknown"));
@@ -219,6 +227,30 @@ namespace BlockUpdateWindowsDefender.ViewModels
         {
             get => _defenderDetailText;
             set => SetProperty(ref _defenderDetailText, value);
+        }
+
+        public string DefenderVerificationStatusText
+        {
+            get => _defenderVerificationStatusText;
+            set => SetProperty(ref _defenderVerificationStatusText, value);
+        }
+
+        public string DefenderRealtimeProtectionText
+        {
+            get => _defenderRealtimeProtectionText;
+            set => SetProperty(ref _defenderRealtimeProtectionText, value);
+        }
+
+        public string DefenderAntivirusStateText
+        {
+            get => _defenderAntivirusStateText;
+            set => SetProperty(ref _defenderAntivirusStateText, value);
+        }
+
+        public string DefenderTamperProtectionText
+        {
+            get => _defenderTamperProtectionText;
+            set => SetProperty(ref _defenderTamperProtectionText, value);
         }
 
         public string BrowserInstallStatusText
@@ -731,6 +763,10 @@ namespace BlockUpdateWindowsDefender.ViewModels
 
             DefenderStatusText = LocalizeDefenderStatus(DefenderStatusText);
             DefenderDetailText = LocalizeDefenderDetail(DefenderDetailText);
+            DefenderVerificationStatusText = LocalizeDefenderStatus(DefenderVerificationStatusText);
+            DefenderRealtimeProtectionText = LocalizeDefenderStatus(DefenderRealtimeProtectionText);
+            DefenderAntivirusStateText = LocalizeDefenderStatus(DefenderAntivirusStateText);
+            DefenderTamperProtectionText = LocalizeDefenderStatus(DefenderTamperProtectionText);
 
             UpdatePublicIpDisplay(null, false);
         }
@@ -760,6 +796,21 @@ namespace BlockUpdateWindowsDefender.ViewModels
 
             DefenderStatusText = LocalizeDefenderStatus(status.StatusText);
             DefenderDetailText = LocalizeDefenderDetail(status.DetailText);
+
+            if (!status.IsSupported)
+            {
+                var unsupported = LocalizeDefenderStatus("Unsupported");
+                DefenderVerificationStatusText = unsupported;
+                DefenderRealtimeProtectionText = unsupported;
+                DefenderAntivirusStateText = unsupported;
+                DefenderTamperProtectionText = unsupported;
+                return;
+            }
+
+            DefenderVerificationStatusText = LocalizeDefenderStatus(status.StatusText);
+            DefenderRealtimeProtectionText = LocalizeDefenderStatus(status.IsRealtimeProtectionEnabled ? "Enabled" : "Disabled");
+            DefenderAntivirusStateText = LocalizeDefenderStatus(status.IsAntivirusEnabled ? "Enabled" : "Disabled");
+            DefenderTamperProtectionText = LocalizeDefenderStatus(status.IsTamperProtected ? "Enabled" : "Disabled");
         }
 
         private void UpdatePublicIpDisplay(string ip, bool persist)

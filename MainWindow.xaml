@@ -452,9 +452,6 @@
                                            Style="{StaticResource DetailTextStyle}" />
                                 <Border Grid.Row="3" Style="{StaticResource ActionBarBorderStyle}">
                                     <WrapPanel>
-                                        <Button Content="{DynamicResource ButtonRefresh}"
-                                                Style="{StaticResource SecondaryButtonStyle}"
-                                                Command="{Binding RefreshCommand}" />
                                         <Button Content="{DynamicResource ButtonEnableUpdate}"
                                                 Style="{StaticResource PrimaryButtonStyle}"
                                                 Command="{Binding EnableWindowsUpdateCommand}" />
@@ -707,7 +704,7 @@
                                     </Grid>
                                 </Border>
 
-                                <Border Style="{StaticResource VerificationRowBorderStyle}" Margin="0">
+                                <Border Style="{StaticResource VerificationRowBorderStyle}">
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="170" />
@@ -718,6 +715,70 @@
                                                    Text="{Binding WindowsUpdateWaaSMedicSvcStateText}"
                                                    Style="{StaticResource VerificationValueStyle}"
                                                    Foreground="{Binding WindowsUpdateWaaSMedicSvcStateText, Converter={StaticResource StatusBrushConverter}}"
+                                                   Margin="10,0,0,0"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </Border>
+
+                                <Border Style="{StaticResource VerificationRowBorderStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="170" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{DynamicResource VerificationDefenderStatus}" Style="{StaticResource VerificationLabelStyle}" />
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding DefenderVerificationStatusText}"
+                                                   Style="{StaticResource VerificationValueStyle}"
+                                                   Foreground="{Binding DefenderVerificationStatusText, Converter={StaticResource StatusBrushConverter}}"
+                                                   Margin="10,0,0,0"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </Border>
+
+                                <Border Style="{StaticResource VerificationRowBorderStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="170" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{DynamicResource VerificationDefenderRealtime}" Style="{StaticResource VerificationLabelStyle}" />
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding DefenderRealtimeProtectionText}"
+                                                   Style="{StaticResource VerificationValueStyle}"
+                                                   Foreground="{Binding DefenderRealtimeProtectionText, Converter={StaticResource StatusBrushConverter}}"
+                                                   Margin="10,0,0,0"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </Border>
+
+                                <Border Style="{StaticResource VerificationRowBorderStyle}">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="170" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{DynamicResource VerificationDefenderAntivirus}" Style="{StaticResource VerificationLabelStyle}" />
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding DefenderAntivirusStateText}"
+                                                   Style="{StaticResource VerificationValueStyle}"
+                                                   Foreground="{Binding DefenderAntivirusStateText, Converter={StaticResource StatusBrushConverter}}"
+                                                   Margin="10,0,0,0"
+                                                   VerticalAlignment="Center" />
+                                    </Grid>
+                                </Border>
+
+                                <Border Style="{StaticResource VerificationRowBorderStyle}" Margin="0">
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="170" />
+                                            <ColumnDefinition Width="*" />
+                                        </Grid.ColumnDefinitions>
+                                        <TextBlock Text="{DynamicResource VerificationDefenderTamper}" Style="{StaticResource VerificationLabelStyle}" />
+                                        <TextBlock Grid.Column="1"
+                                                   Text="{Binding DefenderTamperProtectionText}"
+                                                   Style="{StaticResource VerificationValueStyle}"
+                                                   Foreground="{Binding DefenderTamperProtectionText, Converter={StaticResource StatusBrushConverter}}"
                                                    Margin="10,0,0,0"
                                                    VerticalAlignment="Center" />
                                     </Grid>

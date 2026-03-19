@@ -14,7 +14,7 @@
     <sys:String x:Key="TabControl">Điều khiển</sys:String>
     <sys:String x:Key="TabBrowserInstall">Cài trình duyệt</sys:String>
     <sys:String x:Key="TabVerification">Kiểm tra</sys:String>
-    <sys:String x:Key="TabTimeZone">Múi giờ</sys:String>
+    <sys:String x:Key="TabTimeZone">M&#250;i gi&#7901;</sys:String>
     <sys:String x:Key="TabSoftwareUpdate">Cập nhật</sys:String>
     <sys:String x:Key="TabActivityLog">Nhật ký</sys:String>
 
@@ -22,7 +22,7 @@
     <sys:String x:Key="LabelComputerName">Tên máy</sys:String>
     <sys:String x:Key="LabelWindowsEdition">Phiên bản Windows</sys:String>
     <sys:String x:Key="LabelVersionBuild">Version / Build</sys:String>
-    <sys:String x:Key="LabelCurrentTimeZone">Múi giờ hiện tại</sys:String>
+    <sys:String x:Key="LabelCurrentTimeZone">M&#250;i gi&#7901; hi&#7879;n t&#7841;i</sys:String>
     <sys:String x:Key="SectionWindowsUpdate">Windows Update</sys:String>
     <sys:String x:Key="ButtonRefresh">Tải lại</sys:String>
     <sys:String x:Key="ButtonEnableUpdate">Bật Update</sys:String>
@@ -43,17 +43,21 @@
     <sys:String x:Key="BrowserCentBrowser">CentBrowser</sys:String>
     <sys:String x:Key="ButtonInstallSelectedBrowsers">Cài các trình duyệt đã chọn</sys:String>
 
-    <sys:String x:Key="SectionVerification">Kiểm tra Windows Update</sys:String>
-    <sys:String x:Key="VerificationSubtitle">Đọc lại trạng thái thực tế sau khi thay đổi policy và service.</sys:String>
+    <sys:String x:Key="SectionVerification">Ki&#7875;m tra Windows Update &amp; Defender</sys:String>
+    <sys:String x:Key="VerificationSubtitle">&#272;&#7885;c l&#7841;i tr&#7841;ng th&#225;i th&#7921;c t&#7871; sau khi thay &#273;&#7893;i policy, service v&#224; Defender.</sys:String>
     <sys:String x:Key="ButtonRefreshVerification">Làm mới kiểm tra</sys:String>
     <sys:String x:Key="VerificationPolicyState">Trạng thái policy</sys:String>
     <sys:String x:Key="VerificationManualUpdate">Update thủ công</sys:String>
     <sys:String x:Key="VerificationWuauserv">wuauserv</sys:String>
     <sys:String x:Key="VerificationUsoSvc">UsoSvc</sys:String>
     <sys:String x:Key="VerificationWaaSMedicSvc">WaaSMedicSvc</sys:String>
-    <sys:String x:Key="VerificationFooter">Hardening theo best-effort: Windows vẫn có thể bảo vệ hoặc khôi phục một số thành phần update tùy theo OS và cơ chế bảo vệ service.</sys:String>
+    <sys:String x:Key="VerificationDefenderStatus">Tr&#7841;ng th&#225;i Defender</sys:String>
+    <sys:String x:Key="VerificationDefenderRealtime">Realtime Protection</sys:String>
+    <sys:String x:Key="VerificationDefenderAntivirus">Antivirus Engine</sys:String>
+    <sys:String x:Key="VerificationDefenderTamper">Tamper Protection</sys:String>
+    <sys:String x:Key="VerificationFooter">Hardening theo best-effort: Windows v&#7851;n c&#243; th&#7875; b&#7843;o v&#7879; ho&#7863;c kh&#244;i ph&#7909;c m&#7897;t s&#7889; th&#224;nh ph&#7847;n update v&#224; Defender t&#249;y theo OS v&#224; c&#417; ch&#7871; b&#7843;o v&#7879; service.</sys:String>
 
-    <sys:String x:Key="SectionTimeAndTimeZone">Thời gian &amp; Múi giờ</sys:String>
+    <sys:String x:Key="SectionTimeAndTimeZone">Th&#7901;i gian &amp; M&#250;i gi&#7901;</sys:String>
     <sys:String x:Key="CheckboxAutoSyncTimeOnStartup">Tự động cập nhật khi mở app</sys:String>
     <sys:String x:Key="CheckboxRunAtWindowsStartup">Chạy cùng Windows</sys:String>
     <sys:String x:Key="LabelCurrentLocalTime">Thời gian local hiện tại</sys:String>
