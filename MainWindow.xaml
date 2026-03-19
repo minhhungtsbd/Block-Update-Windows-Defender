@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:converters="clr-namespace:BlockUpdateWindowsDefender.Converters"
         mc:Ignorable="d"
-        Title="{DynamicResource WindowTitle}"
+        Title="Windows VPS Control Center"
         Height="680"
         Width="980"
         MinHeight="640"
@@ -316,8 +316,8 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel>
-                    <TextBlock Text="{DynamicResource AppTitle}" Foreground="White" FontSize="26" FontWeight="Bold" />
-                    <TextBlock Text="{DynamicResource AppSubtitle}" Foreground="{StaticResource MutedBrush}" Margin="0,5,0,0" FontSize="13" />
+                    <TextBlock Text="Windows VPS Control Center" Foreground="White" FontSize="26" FontWeight="Bold" />
+                    <TextBlock Text="Manage updates, security, time sync, and browser installation" Foreground="{StaticResource MutedBrush}" Margin="0,5,0,0" FontSize="13" />
                     <TextBlock Text="{Binding PublicIpDisplayText}"
                                Foreground="{StaticResource MutedBrush}"
                                Margin="0,6,0,0"
@@ -918,8 +918,11 @@
                                 </Grid>
                             </Border>
 
-                            <StackPanel Grid.Row="4" Margin="2,14,0,0">
-                                <TextBlock Text="{DynamicResource SoftwareUpdateOpenSourceLabel}"
+                            <StackPanel Grid.Row="4"
+                                        Margin="2,0,0,2"
+                                        VerticalAlignment="Bottom"
+                                        HorizontalAlignment="Left">
+                                <TextBlock Text="Open-source project"
                                            Foreground="{StaticResource MutedBrush}"
                                            FontSize="11"
                                            FontWeight="SemiBold" />
@@ -927,11 +930,11 @@
                                            FontSize="11"
                                            Margin="0,4,0,0"
                                            TextWrapping="Wrap">
-                                    <Run Text="{DynamicResource SoftwareUpdateOpenSourceDescription}" />
+                                    <Run Text="GitHub repository:" />
                                     <Run Text=" " />
                                     <Hyperlink NavigateUri="https://github.com/minhhungtsbd/Block-Update-Windows-Defender"
                                                RequestNavigate="RepositoryLink_RequestNavigate">
-                                        <Run Text="https://github.com/minhhungtsbd/Block-Update-Windows-Defender" />
+                                        <Run Text="Block-Update-Windows-Defender" />
                                     </Hyperlink>
                                 </TextBlock>
                             </StackPanel>
