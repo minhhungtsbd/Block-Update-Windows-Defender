@@ -10,6 +10,7 @@ namespace BlockUpdateWindowsDefender.Services
     {
         private const string RdpTcpPath = @"SYSTEM\CurrentControlSet\Control\Terminal Server\WinStations\RDP-Tcp";
         private const string RdpWdsPath = @"SYSTEM\CurrentControlSet\Control\Terminal Server\Wds\rdpwd\Tds\tcp";
+        private const string WinlogonPath = @"SOFTWARE\Microsoft\Windows NT\CurrentVersion\Winlogon";
         private readonly ProcessRunner _processRunner;
 
         public SystemMaintenanceService(ProcessRunner processRunner)
@@ -50,10 +51,23 @@ namespace BlockUpdateWindowsDefender.Services
                 };
             }
 
+            try
+            {
+                ConfigureAutoAdminLogon(Environment.UserName, newPassword);
+            }
+            catch (Exception ex)
+            {
+                return new OperationResult
+                {
+                    IsSuccess = false,
+                    Message = "Windows password was changed, but auto logon settings could not be updated: " + ex.Message
+                };
+            }
+
             return new OperationResult
             {
                 IsSuccess = true,
-                Message = "Windows password changed successfully."
+                Message = "Windows password changed successfully. Auto logon settings updated."
             };
         }
 
@@ -241,6 +255,34 @@ namespace BlockUpdateWindowsDefender.Services
                 }
 
                 key.SetValue("PortNumber", newPort, RegistryValueKind.DWord);
+            }
+        }
+
+        private static void ConfigureAutoAdminLogon(string userName, string password)
+        {
+            using (var key = Registry.LocalMachine.CreateSubKey(WinlogonPath))
+            {
+                if (key == null)
+                {
+                    throw new InvalidOperationException("Could not open Winlogon registry key.");
+                }
+
+                var domainName = Environment.UserDomainName;
+                if (string.IsNullOrWhiteSpace(domainName))
+                {
+                    domainName = Environment.MachineName;
+                }
+
+                key.SetValue("AutoAdminLogon", "1", RegistryValueKind.String);
+                key.SetValue("DefaultUserName", userName ?? string.Empty, RegistryValueKind.String);
+                key.SetValue("DefaultUsername", userName ?? string.Empty, RegistryValueKind.String);
+                key.SetValue("DefaultPassword", password ?? string.Empty, RegistryValueKind.String);
+                key.SetValue("DefaultDomainName", domainName, RegistryValueKind.String);
+
+                if (Array.IndexOf(key.GetValueNames(), "ForceAutoLogon") >= 0)
+                {
+                    key.DeleteValue("ForceAutoLogon", false);
+                }
             }
         }
 
